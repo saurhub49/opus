@@ -1,5 +1,6 @@
 package com.opus.security;
 
+import com.opus.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -62,9 +63,9 @@ public class JwtHelper {
     /**
      * Retrieves a specific claim from a JWT token using a claims resolver function.
      *
-     * @param token           The JWT token from which the claim is to be extracted.
-     * @param claimsResolver  A function that resolves the desired claim from the token's Claims object.
-     * @param <T>             The type of the claim to be retrieved.
+     * @param token          The JWT token from which the claim is to be extracted.
+     * @param claimsResolver A function that resolves the desired claim from the token's Claims object.
+     * @param <T>            The type of the claim to be retrieved.
      * @return The specified claim extracted from the token.
      */
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -99,7 +100,7 @@ public class JwtHelper {
      * @param userDetails The UserDetails object representing the user for whom the token is generated.
      * @return The generated JWT token.
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }
@@ -108,11 +109,11 @@ public class JwtHelper {
      * Generates a JSON Web Token (JWT) based on the provided claims and subject, using the
      * HS512 (HMAC-SHA512) signing algorithm with a secret key.
      *
-     * @param claims   A Map containing the claims to be included in the JWT payload. These claims
-     *                 represent information about the token, such as user roles, permissions, or
-     *                 custom data.
-     * @param subject  A String representing the subject of the JWT, typically identifying the
-     *                 user or entity for whom the token is issued.
+     * @param claims  A Map containing the claims to be included in the JWT payload. These claims
+     *                represent information about the token, such as user roles, permissions, or
+     *                custom data.
+     * @param subject A String representing the subject of the JWT, typically identifying the
+     *                user or entity for whom the token is issued.
      * @return A String representing the generated JWT.
      */
     private String doGenerateToken(Map<String, Object> claims, String subject) {
@@ -128,7 +129,14 @@ public class JwtHelper {
                 .compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    /**
+     * Validates a JWT (JSON Web Token) by checking if it corresponds to the provided user's credentials.
+     *
+     * @param token       The JWT to be validated.
+     * @param userDetails The user details against which the token is validated.
+     * @return True if the token is valid for the given user, false otherwise.
+     */
+    public Boolean validateToken(String token, User userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
