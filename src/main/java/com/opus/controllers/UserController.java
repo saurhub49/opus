@@ -11,20 +11,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        UserDto response = userService.createUser(userDto);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<?> getAllUsers() {
+        Long userId = getUserId();
         List<UserDto> response = userService.getAllUsers();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
