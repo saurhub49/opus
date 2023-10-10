@@ -1,5 +1,6 @@
 package com.opus.security;
 
+import com.opus.entities.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -62,9 +63,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /**
      * Performs the actual JWT authentication and sets the authentication context if a valid token is present.
      *
-     * @param request       The incoming HTTP request.
-     * @param response      The HTTP response.
-     * @param filterChain   The filter chain to continue processing the request.
+     * @param request     The incoming HTTP request.
+     * @param response    The HTTP response.
+     * @param filterChain The filter chain to continue processing the request.
      * @throws ServletException If a servlet-related error occurs.
      * @throws IOException      If an I/O error occurs.
      */
@@ -103,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // If a valid username is found and no authentication context is set, perform authentication
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            User userDetails = (User) this.userDetailsService.loadUserByUsername(username);
 
             // Validate the token and set the authentication context if valid
             Boolean isTokenValid = this.jwtHelper.validateToken(token, userDetails);

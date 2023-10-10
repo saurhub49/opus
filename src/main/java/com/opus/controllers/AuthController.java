@@ -2,6 +2,7 @@ package com.opus.controllers;
 
 import com.opus.dtos.request.JwtRequest;
 import com.opus.dtos.response.JwtResponse;
+import com.opus.entities.User;
 import com.opus.security.JwtHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class AuthController {
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        User userDetails = (User) userDetailsService.loadUserByUsername(request.getEmail());
 
         String token = this.helper.generateToken(userDetails);
 
