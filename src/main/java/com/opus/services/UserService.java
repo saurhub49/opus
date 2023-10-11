@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +26,12 @@ public class UserService {
         return users.stream().map(UserDto::fromEntity).collect(Collectors.toList());
     }
 
+    public UserDto getUser(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+
+        return user.map(UserDto::fromEntity).orElse(null);
+    }
+
     public UserDto createUser(UserDto userDto) {
         User user = new User();
         user.setEmail(userDto.email());
@@ -35,5 +42,11 @@ public class UserService {
 
         user = userRepository.save(user);
         return UserDto.fromEntity(user);
+    }
+
+    public Long deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+
+        return userId;
     }
 }
