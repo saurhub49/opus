@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @Tag(name = "Users", description = "Endpoint for users api")
-@CrossOrigin(origins = "*")
 public class UserController extends BaseController {
 
     @Autowired
