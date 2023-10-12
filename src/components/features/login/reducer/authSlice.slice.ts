@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { JwtResponse } from "../../../../openapi";
-import { loginAction } from "../actions/authAsyncThunkActions";
+import { loginAction } from "../actions/authAsyncThunkActions.action";
+import { setAxiosAuthorizationHeader } from "../../../../utils/axios.util";
 
 
 const initialState: JwtResponse = {
@@ -20,6 +21,7 @@ const authSlice = createSlice({
             })
             .addCase(loginAction.fulfilled, (state, action) => {
                 state = action.payload;
+                setAxiosAuthorizationHeader(state.token ?? '');
             })
             .addCase(loginAction.rejected, (state, action) => {
                 state.token = '';
