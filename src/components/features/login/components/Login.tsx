@@ -11,7 +11,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useAppDispatch } from '../../../../global/redux/hooks';
-import { loginAction } from '../actions/authAsyncThunkActions';
+import { loginAction } from '../actions/authAsyncThunkActions.action';
+import { UsersApi } from '../../../../openapi';
+import { removeAxiosAuthorizationHeader } from '../../../../utils/axios.util';
 
 function Copyright(props: any) {
     return (
@@ -35,7 +37,15 @@ const Login: React.FC = () => {
             email: email,
             password: password
         }))
-    }
+    };
+
+    const handleClick = React.useCallback(async () => {
+        const api = new UsersApi();
+
+        const response = await api.getAllUsers();
+        removeAxiosAuthorizationHeader();
+        console.log(response);
+    }, []);
 
     const handleEmailUpdate = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
@@ -98,6 +108,14 @@ const Login: React.FC = () => {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Sign In
+                    </Button>
+                    <Button
+                        onClick={handleClick}
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Click me
                     </Button>
                     <Grid container>
                         <Grid item xs>
