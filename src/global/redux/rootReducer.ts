@@ -1,10 +1,10 @@
-import { AnyAction, ReducersMapObject } from "@reduxjs/toolkit"
+import { combineReducers } from "@reduxjs/toolkit";
 import authSlice from "../../components/features/login/reducer/authSlice.slice"
+import sidebarSlice from "../../components/layout/reducer/sidebar.slice";
 
-type ReducerType = ReducersMapObject<any, AnyAction>
-
-const rootReducer: ReducerType = {
+const rootReducer = combineReducers({
     auth: authSlice,
-}
+    sidebar: sidebarSlice
+});
 
 export default rootReducer;
