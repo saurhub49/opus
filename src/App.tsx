@@ -8,13 +8,11 @@ import PageContainer from './components/layout/components/PageContainer';
 
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <PageContainer />
-        </ThemeProvider>
-      </Provider>
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <PageContainer />
+      </ThemeProvider>
+    </Provider>
   );
 }
 
