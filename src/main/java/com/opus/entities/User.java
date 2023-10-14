@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -14,27 +15,53 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "email")
+    @Column(nullable = false, unique = true, length = 255)
     private String email;
-    @Column(name = "password")
+
+    @Column(nullable = false, length = 255)
     private String password;
-    @Column(name = "first_name")
+    @Column(nullable = false, name = "first_name")
     private String firstName;
     @Column(name = "middle_name")
     private String middleName;
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+
+    @Column(columnDefinition = "TEXT")
+    private String address;
+
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
+
+    @Column(nullable = false, length = 20)
+    private String gender;
+
+    @Column(length = 50)
+    private String nationality;
+
+    @Column(name = "marital_status", length = 20)
+    private String maritalStatus;
+
     public User() {
     }
 
-    public User(Long id, String email, String password, String firstName, String middleName, String lastName) {
+    public User(Long id, String email, String password, String firstName, String middleName, String lastName, String phoneNumber, String address, Date dateOfBirth, String gender, String nationality, String maritalStatus) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.nationality = nationality;
+        this.maritalStatus = maritalStatus;
     }
 
     @Override
@@ -116,6 +143,54 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -125,6 +200,12 @@ public class User implements UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                ", nationality='" + nationality + '\'' +
+                ", maritalStatus='" + maritalStatus + '\'' +
                 '}';
     }
 }
