@@ -19,13 +19,13 @@ export const getSideBarItems = (): SidebarItem[] => {
             icon: <InfoIcon />
         },
         {
-            id: 1,
+            id: 3,
             label: 'Contact',
             path: '/contact',
             icon: <CallIcon />
         },
         {
-            id: 1,
+            id: 4,
             label: 'Login',
             path: '/login',
             icon: <LoginIcon />
