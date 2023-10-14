@@ -9,7 +9,6 @@ const initialState: JwtResponse = {
     username: ""
 };
 
-
 const authSlice = createSlice({
     name: 'auth',
     initialState,

@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { loginAction } from '../actions/authAsyncThunkActions.action';
 import { UsersApi } from '../../../../openapi';
-import { removeAxiosAuthorizationHeader } from '../../../../utils/axios.util';
 import { useAppDispatch } from '../../../../global/redux/hooks';
 
 function Copyright(props: any) {
@@ -43,7 +42,6 @@ const Login: React.FC = () => {
         const api = new UsersApi();
 
         const response = await api.getAllUsers();
-        removeAxiosAuthorizationHeader();
         console.log(response);
     }, []);
 
