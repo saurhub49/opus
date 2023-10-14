@@ -1,5 +1,6 @@
 package com.opus.controllers;
 
+import com.opus.dtos.response.UserDetailsDto;
 import com.opus.dtos.response.UserDto;
 import com.opus.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,16 +20,16 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserDetailsDto>> getAllUsers() {
         Long userId = getUserId();
-        List<UserDto> response = userService.getAllUsers();
+        List<UserDetailsDto> response = userService.getAllUsers();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long userId) {
-        UserDto response = userService.getUser(userId);
+    public ResponseEntity<UserDetailsDto> getUser(@PathVariable Long userId) {
+        UserDetailsDto response = userService.getUser(userId);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

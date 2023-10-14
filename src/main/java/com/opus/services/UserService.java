@@ -1,5 +1,6 @@
 package com.opus.services;
 
+import com.opus.dtos.response.UserDetailsDto;
 import com.opus.dtos.response.UserDto;
 import com.opus.entities.User;
 import com.opus.repositories.UserRepository;
@@ -20,19 +21,19 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<UserDto> getAllUsers() {
+    public List<UserDetailsDto> getAllUsers() {
         List<User> users = userRepository.findAll();
 
-        return users.stream().map(UserDto::fromEntity).collect(Collectors.toList());
+        return users.stream().map(UserDetailsDto::fromEntity).collect(Collectors.toList());
     }
 
-    public UserDto getUser(Long userId) {
+    public UserDetailsDto getUser(Long userId) {
         Optional<User> user = userRepository.findById(userId);
 
-        return user.map(UserDto::fromEntity).orElse(null);
+        return user.map(UserDetailsDto::fromEntity).orElse(null);
     }
 
-    public UserDto createUser(UserDto userDto) {
+    public UserDetailsDto createUser(UserDto userDto) {
         User user = new User();
         user.setEmail(userDto.email());
         user.setPassword(passwordEncoder.encode(userDto.password()));
@@ -41,7 +42,7 @@ public class UserService {
         user.setLastName(userDto.lastName());
 
         user = userRepository.save(user);
-        return UserDto.fromEntity(user);
+        return UserDetailsDto.fromEntity(user);
     }
 
     public Long deleteUser(Long userId) {
