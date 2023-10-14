@@ -2,6 +2,7 @@ package com.opus.controllers;
 
 import com.opus.dtos.request.JwtRequest;
 import com.opus.dtos.response.JwtResponse;
+import com.opus.dtos.response.UserDetailsDto;
 import com.opus.dtos.response.UserDto;
 import com.opus.entities.User;
 import com.opus.security.JwtHelper;
@@ -39,8 +40,8 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        UserDto response = userService.createUser(userDto);
+    public ResponseEntity<UserDetailsDto> createUser(@RequestBody UserDto userDto) {
+        UserDetailsDto response = userService.createUser(userDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
