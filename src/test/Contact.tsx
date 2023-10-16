@@ -1,12 +1,14 @@
+import { Box, CssBaseline } from "@mui/material";
 
 
 const Contact = () => {
     return (
-        <div>
+        <Box>
+            <CssBaseline />
             <h1>
                 Contact
             </h1>
-        </div>
+        </Box>
     )
 }
 

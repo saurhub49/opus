@@ -6,7 +6,7 @@ const OpusSnackbar: React.FC = () => {
 
     return (
         snackbarItems.map(snackbar => (
-            <OpusSnackbarItem snackbar={snackbar} />
+            <OpusSnackbarItem key={snackbar.id} snackbar={snackbar} />
         ))
     )
 }

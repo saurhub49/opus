@@ -1843,7 +1843,7 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.6.tgz#d72b9e9eb0032e107e76033932d65c3f731d2608"
   integrity sha512-7sjLQrUmBwufm/M7jw/quNiPK/oor2+pGUQP2CULRcFCArYTq78oJ3D5esTaL0UMkXKJvDqXn6Ike69yAOBQng==
 
-"@mui/utils@^5.14.13":
+"@mui/utils@^5.14.11", "@mui/utils@^5.14.13":
   version "5.14.13"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.14.13.tgz#42c352b342da90b44a29a83d3dbda6ee1e56a0f8"
   integrity sha512-2AFpyXWw7uDCIqRu7eU2i/EplZtks5LAMzQvIhC79sPV9IhOZU2qwOWVnPtdctRXiQJOAaXulg+A37pfhEueQw==
@@ -1852,6 +1852,17 @@
     "@types/prop-types" "^15.7.7"
     prop-types "^15.8.1"
     react-is "^18.2.0"
+
+"@mui/x-data-grid@^6.16.2":
+  version "6.16.2"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-6.16.2.tgz#115354c32827c4a92a05c7576dbe3b152ca718f3"
+  integrity sha512-nKZxlzkcqXUbgxvz01J0okziBH4uvnEVVneOSzp5TeCOC7Wke1YFBJRRjR6H6tVpbaqlOw/LFULrTfcJtiaMBQ==
+  dependencies:
+    "@babel/runtime" "^7.23.1"
+    "@mui/utils" "^5.14.11"
+    clsx "^2.0.0"
+    prop-types "^15.8.1"
+    reselect "^4.1.8"
 
 "@nestjs/axios@0.1.0":
   version "0.1.0"

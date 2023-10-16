@@ -11,11 +11,14 @@ import { toggleSidebar } from '../reducer/sidebar.slice';
 import SidebarItem from '../interfaces/sidebarItem.interface';
 import { Box, Drawer, Grid, ListItem, PaperProps, Toolbar } from '@mui/material';
 import { drawerWidth } from '../constants/layoutConstants.constants';
-import MenuIcon from '@mui/icons-material/Menu';
+import OpusLogo from '../../../global/logos/OpusLogo';
+import { blueGrey } from '@mui/material/colors';
 
 const drawerPaperProps: Partial<PaperProps<React.ElementType<any>>> = {
     sx: {
-        width: drawerWidth + 'px'
+        width: drawerWidth + 'px',
+        backgroundColor: blueGrey[50],
+        boxShadow: 3
     }
 };
 
@@ -30,10 +33,10 @@ const Sidebar: React.FC = () => {
     }, [dispatch, isOpen])
 
     return (
-        <Drawer variant={isLargeDevice ? 'persistent' : 'temporary'} open={isOpen} anchor='left' onClose={handleDrawerToggle} PaperProps={drawerPaperProps}>
+        <Drawer variant={isLargeDevice ? 'persistent' : 'temporary'} elevation={4} open={isOpen} anchor='left' onClose={handleDrawerToggle} PaperProps={drawerPaperProps}>
             <Toolbar>
-                <Grid px={5} container justifyContent='space-between' alignItems='center'>
-                    <MenuIcon />
+                <Grid px={5} py={2} container justifyContent='center' alignItems='center'>
+                    <OpusLogo />
                     {
                         !isLargeDevice && (
                             <IconButton type='button' color='secondary' onClick={handleDrawerToggle}></IconButton>
@@ -47,7 +50,7 @@ const Sidebar: React.FC = () => {
                         <ListItem key={item.id} disablePadding sx={{
                             display: 'block',
                             ':hover': {
-                                backgroundColor: theme.palette.grey[100],
+                                backgroundColor: blueGrey[100],
                                 borderRadius: '8px',
                                 //boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                                 //padding: '2px 8px',
@@ -60,7 +63,7 @@ const Sidebar: React.FC = () => {
                                     justifyContent: isOpen ? 'initial' : 'center',
                                     px: 2.5,
                                     ":hover": {
-                                        color: theme.palette.info.light
+                                        color: theme.palette.primary.light
                                     }
                                 }}
                                 component={Link}
