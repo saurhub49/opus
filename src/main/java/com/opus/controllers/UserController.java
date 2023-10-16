@@ -2,9 +2,11 @@ package com.opus.controllers;
 
 import com.opus.dtos.response.UserDetailsDto;
 import com.opus.dtos.response.UserDto;
+import com.opus.dtos.response.UserUpdateDto;
 import com.opus.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,9 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDetailsDto>> getAllUsers() {
+    public ResponseEntity<Page<UserDetailsDto>> getAllUsers(@RequestParam(name = "page", defaultValue = "0") Integer page) {
         Long userId = getUserId();
-        List<UserDetailsDto> response = userService.getAllUsers();
+        Page<UserDetailsDto> response = userService.getAllUsers(page);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -30,6 +32,13 @@ public class UserController extends BaseController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDetailsDto> getUser(@PathVariable Long userId) {
         UserDetailsDto response = userService.getUser(userId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDetailsDto> updateUser(@PathVariable Long userId, @RequestBody UserUpdateDto userUpdateDto) {
+        UserDetailsDto response = userService.updateUser(userId, userUpdateDto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
