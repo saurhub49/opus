@@ -64,6 +64,220 @@ export interface JwtResponse {
 /**
  * 
  * @export
+ * @interface PageUserDetailsDto
+ */
+export interface PageUserDetailsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserDetailsDto
+     */
+    'totalPages'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserDetailsDto
+     */
+    'totalElements'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageUserDetailsDto
+     */
+    'first'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageUserDetailsDto
+     */
+    'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserDetailsDto
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserDetailsDto
+     */
+    'size'?: number;
+    /**
+     * 
+     * @type {Array<UserDetailsDto>}
+     * @memberof PageUserDetailsDto
+     */
+    'content'?: Array<UserDetailsDto>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageUserDetailsDto
+     */
+    'number'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageUserDetailsDto
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {PageableObject}
+     * @memberof PageUserDetailsDto
+     */
+    'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageUserDetailsDto
+     */
+    'empty'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PageableObject
+ */
+export interface PageableObject {
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'offset'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageableObject
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageableObject
+     */
+    'paged'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageableObject
+     */
+    'unpaged'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'pageNumber'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'pageSize'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SortObject
+ */
+export interface SortObject {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'empty'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'unsorted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'sorted'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UserDetailsDto
+ */
+export interface UserDetailsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserDetailsDto
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'middleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'gender'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'nationality'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetailsDto
+     */
+    'maritalStatus'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UserDto
  */
 export interface UserDto {
@@ -103,6 +317,91 @@ export interface UserDto {
      * @memberof UserDto
      */
     'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDto
+     */
+    'gender'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserUpdateDto
+ */
+export interface UserUpdateDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'middleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'gender'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'nationality'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDto
+     */
+    'maritalStatus'?: string;
 }
 
 /**
@@ -128,17 +427,17 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(userDto, localVarRequestOptions, configuration)
 
             return {
@@ -163,17 +462,17 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
+    
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(jwtRequest, localVarRequestOptions, configuration)
 
             return {
@@ -188,7 +487,7 @@ export const AuthControllerApiAxiosParamCreator = function (configuration?: Conf
  * AuthControllerApi - functional programming interface
  * @export
  */
-export const AuthControllerApiFp = function (configuration?: Configuration) {
+export const AuthControllerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthControllerApiAxiosParamCreator(configuration)
     return {
         /**
@@ -197,7 +496,7 @@ export const AuthControllerApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(userDto: UserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+        async createUser(userDto: UserDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetailsDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(userDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -227,7 +526,7 @@ export const AuthControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(userDto: UserDto, options?: any): AxiosPromise<UserDto> {
+        createUser(userDto: UserDto, options?: any): AxiosPromise<UserDetailsDto> {
             return localVarFp.createUser(userDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -298,15 +597,15 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
-
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -315,10 +614,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllUsers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllUsers: async (page?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/users/all`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -327,15 +627,19 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
 
 
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -360,15 +664,54 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateDto} userUpdateDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser: async (userId: number, userUpdateDto: UserUpdateDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('updateUser', 'userId', userId)
+            // verify required parameter 'userUpdateDto' is not null or undefined
+            assertParamExists('updateUser', 'userUpdateDto', userUpdateDto)
+            const localVarPath = `/users/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(userUpdateDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -382,7 +725,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
  * UsersApi - functional programming interface
  * @export
  */
-export const UsersApiFp = function (configuration?: Configuration) {
+export const UsersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UsersApiAxiosParamCreator(configuration)
     return {
         /**
@@ -397,11 +740,12 @@ export const UsersApiFp = function (configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllUsers(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDto>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsers(options);
+        async getAllUsers(page?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageUserDetailsDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsers(page, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -410,8 +754,19 @@ export const UsersApiFp = function (configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUser(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDto>> {
+        async getUser(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetailsDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateDto} userUpdateDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateUser(userId: number, userUpdateDto: UserUpdateDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetailsDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userId, userUpdateDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -435,11 +790,12 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @param {number} [page] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllUsers(options?: any): AxiosPromise<Array<UserDto>> {
-            return localVarFp.getAllUsers(options).then((request) => request(axios, basePath));
+        getAllUsers(page?: number, options?: any): AxiosPromise<PageUserDetailsDto> {
+            return localVarFp.getAllUsers(page, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -447,8 +803,18 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser(userId: number, options?: any): AxiosPromise<UserDto> {
+        getUser(userId: number, options?: any): AxiosPromise<UserDetailsDto> {
             return localVarFp.getUser(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} userId 
+         * @param {UserUpdateDto} userUpdateDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUser(userId: number, userUpdateDto: UserUpdateDto, options?: any): AxiosPromise<UserDetailsDto> {
+            return localVarFp.updateUser(userId, userUpdateDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -473,12 +839,13 @@ export class UsersApi extends BaseAPI {
 
     /**
      * 
+     * @param {number} [page] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getAllUsers(options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getAllUsers(options).then((request) => request(this.axios, this.basePath));
+    public getAllUsers(page?: number, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getAllUsers(page, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -490,6 +857,18 @@ export class UsersApi extends BaseAPI {
      */
     public getUser(userId: number, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getUser(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} userId 
+     * @param {UserUpdateDto} userUpdateDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public updateUser(userId: number, userUpdateDto: UserUpdateDto, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).updateUser(userId, userUpdateDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

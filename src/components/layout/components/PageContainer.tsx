@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import { Box, Stack, SxProps, Theme, useMediaQuery } from "@mui/material";
+import { Box, CssBaseline, Stack, SxProps, Theme, useMediaQuery } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../../global/redux/hooks";
 import { toggleDeviceSize } from "../reducer/sidebar.slice";
@@ -9,9 +9,9 @@ import { drawerWidth } from "../constants/layoutConstants.constants";
 import OpusRoutes from "../../../global/OpusRoutes";
 
 const pageLayoutSxProps: SxProps<Theme> = {
-    padding: 10,
+    padding: 5,
     height: '100%',
-    width: '100%',
+    width: 'auto',
     overflow: 'auto',
 };
 
@@ -28,15 +28,14 @@ const PageContainer = () => {
 
     return (
         <BrowserRouter>
-            <Box sx={{ display: 'flex' }}>
-                <Sidebar />
-                <Stack marginLeft={marginLeft} height='100%' width='100%'>
-                    <OpusAppBar />
-                    <Box sx={pageLayoutSxProps}>
-                        <OpusRoutes />
-                    </Box>
-                </Stack>
-            </Box>
+            <Sidebar />
+            <Stack marginLeft={marginLeft} height='100%'>
+                <OpusAppBar />
+                <Box sx={pageLayoutSxProps}>
+                    <CssBaseline />
+                    <OpusRoutes />
+                </Box>
+            </Stack>
         </BrowserRouter>
     )
 }
