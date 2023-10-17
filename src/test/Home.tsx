@@ -1,9 +1,9 @@
 
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import { useAppDispatch, useAppSelector } from "../global/redux/hooks";
 import { useEffect } from "react";
 import { getUsers } from "../components/features/employees/actions/employee.action";
-import { CssBaseline } from "@mui/material";
+import GenericDataGrid from "../components/features/common/components/GenericDataGrid";
 
 
 const columns: GridColDef[] = [
@@ -30,35 +30,8 @@ const Home = () => {
 
     return (
         <>
-
-            <CssBaseline />
             <h1>Employee Grid</h1>
-            <DataGrid
-                columns={columns}
-                rows={users.content ?? []}
-                slots={{
-                    toolbar: GridToolbar,
-
-                }}
-                slotProps={{
-                    toolbar: {
-                        showQuickFilter: true,
-                    },
-                }}
-                pageSizeOptions={[100, 10, 25, 50]}
-                pagination
-                checkboxSelection={false}
-                sx={{
-                    boxShadow: 2,
-                    '& .MuiDataGrid-columnHeaderTitle': {
-                        fontWeight: 'bold'
-                    },
-                    '& .MuiDataGrid-cell:focus': {
-                        outline: 'none'
-                    }
-                }}
-                density="comfortable"
-            />
+            <GenericDataGrid columns={columns} rows={users.content ?? []} />
         </>
     )
 }
