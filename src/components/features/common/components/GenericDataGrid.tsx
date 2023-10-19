@@ -31,7 +31,10 @@ const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
                 },
                 '& .MuiDataGrid-cell:focus': {
                     outline: 'none'
-                }
+                },
+                '& .MuiDataGrid-columnHeader:focus': {
+                    outline: 'none'
+                },
             }}
             density="comfortable"
         />

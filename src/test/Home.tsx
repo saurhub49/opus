@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../global/redux/hooks";
 import { useEffect } from "react";
 import { getUsers } from "../components/features/employees/actions/employee.action";
 import GenericDataGrid from "../components/features/common/components/GenericDataGrid";
+import GenericPageTemplate from "../components/features/common/components/GenericPageTemplate";
+import Button from "@mui/material/Button";
 
 
 const columns: GridColDef[] = [
@@ -29,10 +31,9 @@ const Home = () => {
     }, [dispatch]);
 
     return (
-        <>
-            <h1>Employee Grid</h1>
+        <GenericPageTemplate title="Employees" subtitle="A list of all employees is displayed" pageActions={[<Button variant="contained">Add New Employee</Button>]}>
             <GenericDataGrid columns={columns} rows={users.content ?? []} />
-        </>
+        </GenericPageTemplate>
     )
 }
 

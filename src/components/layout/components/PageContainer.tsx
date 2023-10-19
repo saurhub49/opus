@@ -7,14 +7,6 @@ import OpusAppBar from "./OpusAppBar";
 import { drawerWidth } from "../constants/layoutConstants.constants";
 import { Outlet } from "react-router-dom";
 
-const pageLayoutSxProps: SxProps<Theme> = {
-    paddingY: 10,
-    paddingX: 20,
-    height: '100%',
-    width: 'auto',
-    overflow: 'auto',
-};
-
 const PageContainer = () => {
     const isLargeDevice = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
     const isSidebarOpen = useAppSelector((state) => state.sidebar.isOpen);
@@ -25,6 +17,14 @@ const PageContainer = () => {
     }, [dispatch, isLargeDevice]);
 
     const marginLeft = useMemo(() => isLargeDevice && isSidebarOpen ? drawerWidth + 'px' : 0, [isLargeDevice, isSidebarOpen]);
+
+    const pageLayoutSxProps: SxProps<Theme> = useMemo(() => ({
+        paddingY: isLargeDevice ? 8 : 2,
+        paddingX: isLargeDevice ? 16 : 4,
+        height: '100%',
+        width: 'auto',
+        overflow: 'auto',
+    }), [isLargeDevice]);
 
     return (
         <>
