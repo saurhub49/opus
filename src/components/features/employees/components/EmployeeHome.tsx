@@ -1,6 +1,10 @@
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useAppSelector } from "../../../../global/redux/hooks";
-
+import { GridColDef } from "@mui/x-data-grid";
+import { useAppDispatch, useAppSelector } from "../../../../global/redux/hooks";
+import GenericPageTemplate from "../../common/components/GenericPageTemplate";
+import GenericDataGrid from "../../common/components/GenericDataGrid";
+import { useEffect } from "react";
+import { getUsers } from "../actions/employee.action";
+import Button from "@mui/material/Button";
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 1, type: 'number' },
@@ -18,15 +22,16 @@ const columns: GridColDef[] = [
 
 const EmployeeHome: React.FC = () => {
     const users = useAppSelector(state => state.employees.users);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, [dispatch]);
 
     return (
-        <>
-            <h1>Employee Grid</h1>
-            <DataGrid
-                columns={columns}
-                rows={users.content ?? []}
-            />
-        </>
+        <GenericPageTemplate title="Employees" subtitle="A list of all employees is displayed" pageActions={[<Button variant="contained">Add New Employee</Button>]}>
+            <GenericDataGrid columns={columns} rows={users.content ?? []} />
+        </GenericPageTemplate>
     )
 }
 
