@@ -64,6 +64,7 @@ public class SecurityConfig {
         return new CorsFilter(source);
     }
 
+
     /**
      * Configures and returns a security filter chain responsible for handling security settings in the application.
      * This method sets up CORS, CSRF, authentication, and exception handling rules.
