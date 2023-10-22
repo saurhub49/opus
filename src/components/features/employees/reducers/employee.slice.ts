@@ -1,14 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PageUserDetailsDto } from "../../../../openapi";
 import { getUsers } from "../actions/employee.action";
+import { UserDetailsDTO } from "../../../../openapi";
 
 
 interface UserState {
-    users: PageUserDetailsDto;
+    users: UserDetailsDTO[];
+    isLoading: boolean;
 }
 
 const initialState: UserState = {
-    users: {},
+    users: [],
+    isLoading: false
 }
 
 const employeeSlice = createSlice({
@@ -19,7 +21,12 @@ const employeeSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getUsers.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.users = action.payload.data
+            })
+        builder
+            .addCase(getUsers.pending, (state) => {
+                state.isLoading = true;
             })
     }
 })

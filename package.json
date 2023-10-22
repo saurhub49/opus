@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "sh api_gen.sh"
+    "api": "sh generate_api.sh"
   },
   "eslintConfig": {
     "extends": [

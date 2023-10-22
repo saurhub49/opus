@@ -21,7 +21,7 @@ const columns: GridColDef[] = [
 ];
 
 const EmployeeHome: React.FC = () => {
-    const users = useAppSelector(state => state.employees.users);
+    const { users, isLoading } = useAppSelector(state => state.employees);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const EmployeeHome: React.FC = () => {
 
     return (
         <GenericPageTemplate title="Employees" subtitle="A list of all employees is displayed" pageActions={[<Button variant="contained">Add New Employee</Button>]}>
-            <GenericDataGrid columns={columns} rows={users.content ?? []} />
+            <GenericDataGrid columns={columns} rows={users ?? []} isLoading={isLoading} />
         </GenericPageTemplate>
     )
 }

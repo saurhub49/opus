@@ -7,12 +7,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../global/redux/hooks';
-import { toggleSidebar } from '../reducer/sidebar.slice';
+import { refreshSidebarItems, toggleSidebar } from '../reducer/sidebar.slice';
 import SidebarItem from '../interfaces/sidebarItem.interface';
 import { Box, Drawer, Grid, ListItem, PaperProps, Toolbar } from '@mui/material';
 import { drawerWidth } from '../constants/layoutConstants.constants';
 import OpusLogo from '../../../global/logos/OpusLogo';
 import { blueGrey } from '@mui/material/colors';
+import { ProfileDetailsDTORoleTypeNameEnum } from '../../../openapi';
 
 const drawerPaperProps: Partial<PaperProps<React.ElementType<any>>> = {
     sx: {
@@ -26,7 +27,12 @@ const Sidebar: React.FC = () => {
     const theme = useTheme();
 
     const { isOpen, isLargeDevice, items } = useAppSelector(state => state.sidebar);
+    const { roleTypeName } = useAppSelector(state => state.profile.profile);
     const dispatch = useAppDispatch();
+
+    React.useEffect(() => {
+        dispatch(refreshSidebarItems(roleTypeName ?? ProfileDetailsDTORoleTypeNameEnum.Employee));
+    }, [dispatch, roleTypeName]);
 
     const handleDrawerToggle = React.useCallback(() => {
         dispatch(toggleSidebar(!isOpen));

@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { JwtResponse } from "../../../openapi";
 import { loginAction } from "../actions/authAsyncThunkActions.action";
+import { AuthResponse } from "../../../openapi";
 
 
-const initialState: JwtResponse = {
+const initialState: AuthResponse = {
     token: "",
-    username: ""
+    username: "",
 };
 
 const authSlice = createSlice({
@@ -18,8 +18,13 @@ const authSlice = createSlice({
                 state.token = '';
             })
             .addCase(loginAction.fulfilled, (state, action) => {
-                state = action.payload;
+                state = {
+                    ...state,
+                    username: action.payload.username,
+                    token: action.payload.token,
+                };
                 localStorage.setItem('token', state.token ?? '');
+                return state;
             })
             .addCase(loginAction.rejected, (state, action) => {
                 state.token = '';

@@ -1,18 +1,25 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import SideBarState from "../interfaces/sidebarState.interface"
-import { getSideBarItems } from "../utils/sidebar.utils";
-
+import SideBarState from "../interfaces/sidebarState.interface";
+import getAuthenticatedSideBarItems from "../utils/getAuthenticatedSideBarItems.utils";
+import { ProfileDetailsDTORoleTypeNameEnum } from "../../../openapi";
 
 const sideBarInitialState: SideBarState = {
     isOpen: true,
     isLargeDevice: true,
-    items: getSideBarItems(),
+    items: getAuthenticatedSideBarItems(ProfileDetailsDTORoleTypeNameEnum.Employee),
 }
 
 const sidebarSlice = createSlice({
     name: 'sidebar',
     initialState: sideBarInitialState,
     reducers: {
+        refreshSidebarItems: (state, action: PayloadAction<ProfileDetailsDTORoleTypeNameEnum>) => {
+            state = {
+                ...state,
+                items: getAuthenticatedSideBarItems(action.payload),
+            }
+            return state;
+        },
         toggleSidebar: (state, action: PayloadAction<boolean>) => {
             state = {
                 ...state,
@@ -30,5 +37,5 @@ const sidebarSlice = createSlice({
     }
 })
 
-export const { toggleSidebar, toggleDeviceSize } = sidebarSlice.actions;
+export const { toggleSidebar, toggleDeviceSize, refreshSidebarItems } = sidebarSlice.actions;
 export default sidebarSlice.reducer;

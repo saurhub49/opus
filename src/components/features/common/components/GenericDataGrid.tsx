@@ -1,20 +1,20 @@
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid"
 
-
 interface GenericDataGridProps {
     columns: GridColDef<any>[];
-    rows: readonly any[]
+    rows: readonly any[];
+    isLoading?: boolean;
 }
 
 const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
-    const { columns, rows } = props;
+    const { columns, rows, isLoading = false } = props;
 
     return (
         <DataGrid
             columns={columns}
             rows={rows}
             slots={{
-                toolbar: GridToolbar,
+                toolbar: GridToolbar
             }}
             slotProps={{
                 toolbar: {
@@ -37,6 +37,7 @@ const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
                 },
             }}
             density="comfortable"
+            loading={isLoading}
         />
     )
 }
