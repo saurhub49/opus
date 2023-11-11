@@ -1,6 +1,7 @@
 package com.opus.controller;
 
 import com.opus.annotations.CheckAuthorization;
+import com.opus.dto.response.ProfileDetailsDTO;
 import com.opus.dto.response.UserDetailsDTO;
 import com.opus.dto.request.UserUpdateDTO;
 import com.opus.enums.Entity;
@@ -22,10 +23,9 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    @CheckAuthorization(permission = Permission.READ, entity = Entity.USER)
+    //@CheckAuthorization(permission = Permission.READ, entity = Entity.USER)
     @GetMapping
     public ResponseEntity<List<UserDetailsDTO>> getAllUsers() {
-        Long userId = getUserId();
         List<UserDetailsDTO> response = userService.getAllUsers();
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -49,6 +49,14 @@ public class UserController extends BaseController {
     public ResponseEntity<Long> deleteUser(@PathVariable Long userId) {
         Long response = userService.deleteUser(userId);
 
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDetailsDTO> getUserProfile() {
+        Long userId = getUserId();
+
+        ProfileDetailsDTO response = userService.getUserProfile(userId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

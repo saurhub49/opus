@@ -1,7 +1,7 @@
 package com.opus.controller;
 
 import com.opus.dto.request.JwtRequest;
-import com.opus.dto.response.JwtResponse;
+import com.opus.dto.response.AuthResponse;
 import com.opus.dto.response.UserDetailsDTO;
 import com.opus.dto.response.UserDTO;
 import com.opus.entity.User;
@@ -46,14 +46,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody JwtRequest request) {
         this.doAuthenticate(request.getEmail(), request.getPassword());
 
         User userDetails = (User) userDetailsService.loadUserByUsername(request.getEmail());
-
         String token = this.helper.generateToken(userDetails);
 
-        JwtResponse response = new JwtResponse(token, userDetails.getUsername());
+        AuthResponse response = new AuthResponse(token, userDetails.getUsername());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
