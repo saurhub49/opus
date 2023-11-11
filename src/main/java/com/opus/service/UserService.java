@@ -1,10 +1,12 @@
 package com.opus.service;
 
+import com.opus.dto.response.ProfileDetailsDTO;
 import com.opus.dto.response.UserDetailsDTO;
 import com.opus.dto.response.UserDTO;
 import com.opus.dto.request.UserUpdateDTO;
 import com.opus.entity.User;
 import com.opus.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,9 +32,9 @@ public class UserService {
     }
 
     public UserDetailsDTO getUser(Long userId) {
-        Optional<User> user = userRepository.findById(userId);
+        User user = getUserById(userId);
 
-        return user.map(UserDetailsDTO::fromEntity).orElse(null);
+        return UserDetailsDTO.fromEntity(user);
     }
 
     public UserDetailsDTO createUser(UserDTO userDto) {
@@ -50,13 +52,7 @@ public class UserService {
     }
 
     public UserDetailsDTO updateUser(Long userId, UserUpdateDTO userDto) {
-        Optional<User> user = userRepository.findById(userId);
-
-        if (user.isEmpty()) {
-            return null;
-        }
-
-        User userToBeUpdated = user.get();
+        User userToBeUpdated = getUserById(userId);
 
         userToBeUpdated.setEmail(userDto.getEmail());
         userToBeUpdated.setFirstName(userDto.getFirstName());
@@ -78,5 +74,15 @@ public class UserService {
         userRepository.deleteById(userId);
 
         return userId;
+    }
+
+    public ProfileDetailsDTO getUserProfile(Long userId) {
+        User user = getUserById(userId);
+
+        return ProfileDetailsDTO.fromEntity(user);
+    }
+
+    private User getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
 }

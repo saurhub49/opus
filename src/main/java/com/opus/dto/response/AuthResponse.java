@@ -1,14 +1,16 @@
 package com.opus.dto.response;
 
 
-public class JwtResponse {
+import com.opus.enums.RoleTypeName;
+
+public class AuthResponse {
     private String token;
     private String username;
 
-    public JwtResponse() {
+    public AuthResponse() {
     }
 
-    public JwtResponse(String token, String username) {
+    public AuthResponse(String token, String username) {
         this.token = token;
         this.username = username;
     }
@@ -31,7 +33,7 @@ public class JwtResponse {
 
     @Override
     public String toString() {
-        return "JwtResponse{" +
+        return "AuthResponse{" +
                 "token='" + token + '\'' +
                 ", username='" + username + '\'' +
                 '}';
