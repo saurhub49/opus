@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PageUserDetailsDto } from "../../../../openapi";
+import { UserDetailsDTO } from "../../../../openapi";
 import { getUsers } from "../actions/employee.action";
 
 
 interface UserState {
-    users: PageUserDetailsDto;
+    users: UserDetailsDTO[];
 }
 
 const initialState: UserState = {
-    users: {},
+    users: [],
 }
 
 const employeeSlice = createSlice({
