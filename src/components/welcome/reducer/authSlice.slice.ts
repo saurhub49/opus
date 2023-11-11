@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { JwtResponse } from "../../../openapi";
+import { AuthResponse } from "../../../openapi";
 import { loginAction } from "../actions/authAsyncThunkActions.action";
 
 
-const initialState: JwtResponse = {
+const initialState: AuthResponse = {
     token: "",
     username: ""
 };

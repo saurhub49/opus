@@ -1,13 +1,15 @@
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid"
+import { DataGrid, GridToolbar } from "@mui/x-data-grid"
+import DataGridModel from "../enums/DataGridModel.enums";
+import useGenericDataGrid from "../hooks/useGenericDatGrid.hooks";
 
 
 interface GenericDataGridProps {
-    columns: GridColDef<any>[];
-    rows: readonly any[]
+    dataGridModel: DataGridModel;
 }
 
 const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
-    const { columns, rows } = props;
+    const { dataGridModel } = props;
+    const { rows, columns } = useGenericDataGrid(dataGridModel);
 
     return (
         <DataGrid
