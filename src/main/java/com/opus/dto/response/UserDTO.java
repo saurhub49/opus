@@ -11,7 +11,7 @@ public record UserDTO(Long id,
                       String firstName,
                       String middleName,
                       String lastName,
-                      @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+                      @JsonFormat(pattern = "yyyy-MM-dd'T'")
                       Date dateOfBirth,
                       String gender) {
 

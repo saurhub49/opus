@@ -6,6 +6,7 @@ import com.opus.entity.Client;
 import com.opus.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class ClientService {
 
     public ClientDTO createClient(ClientDTO ClientDto) {
         Client client = clientDtoConverterlientDtoConverter.mapToEntity(ClientDto);
+        client.setCreateDate(new Date());
         client = clientRepository.save(client);
         return clientDtoConverterlientDtoConverter.mapToDTO(client);
     }
@@ -45,11 +47,7 @@ public class ClientService {
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
 
-            client.setName(ClientDto.getName());
-            client.setCreateDate(ClientDto.getCreateDate());
-            client.setStatus(ClientDto.getStatus());
-            client.setWebsite(ClientDto.getWebsite());
-            client.setPictureUrl(ClientDto.getPictureUrl());
+            client = clientDtoConverterlientDtoConverter.mapToEntity(ClientDto);
 
             client = clientRepository.save(client);
             return clientDtoConverterlientDtoConverter.mapToDTO(client);

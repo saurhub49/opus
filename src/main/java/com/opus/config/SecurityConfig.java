@@ -57,7 +57,16 @@ public class SecurityConfig {
 
         // You can further customize CORS configuration here if needed
         // config.addAllowedOrigin("https://example.com");
-        // config.addAllowedMethod("PUT");
+        // Explicitly specify allowed methods
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
+        config.addAllowedMethod("HEAD");
+        config.addAllowedMethod("OPTIONS");
+//        config.addAllowedMethod("TRACE");
+//        config.addAllowedMethod("CONNECT");
 
         source.registerCorsConfiguration("/**", config);
 
