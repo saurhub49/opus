@@ -12,7 +12,7 @@ public record UserDetailsDTO(Long id,
                              String lastName,
                              String phoneNumber,
                              String address,
-                             @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
+                             @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
                              Date dateOfBirth,
                              String gender,
                              String nationality,

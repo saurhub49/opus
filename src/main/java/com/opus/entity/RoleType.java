@@ -3,6 +3,9 @@ package com.opus.entity;
 import com.opus.enums.RoleTypeName;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "role_type")
 public class RoleType {
@@ -15,6 +18,9 @@ public class RoleType {
     private RoleTypeName name;
 
     private String description;
+
+    @OneToMany(mappedBy = "roleType", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RoleBasedAuthorizationConfiguration> authorizations = new ArrayList<>();
 
     public RoleType() {
     }
@@ -47,6 +53,10 @@ public class RoleType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<RoleBasedAuthorizationConfiguration> getAuthorizations() {
+        return authorizations;
     }
 
     @Override

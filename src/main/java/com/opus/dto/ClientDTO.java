@@ -1,14 +1,16 @@
 package com.opus.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 public class ClientDTO {
     private Long id;
+    @NotNull
     private String name;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
-    private Date createDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    private Date createdDate;
     private Boolean status;
     private String website;
     private String pictureUrl;
@@ -16,10 +18,10 @@ public class ClientDTO {
     public ClientDTO() {
     }
 
-    public ClientDTO(Long id, String name, Date createDate, Boolean status, String website, String pictureUrl) {
+    public ClientDTO(Long id, String name, Date createdDate, Boolean status, String website, String pictureUrl) {
         this.id = id;
         this.name = name;
-        this.createDate = createDate;
+        this.createdDate = createdDate;
         this.status = status;
         this.website = website;
         this.pictureUrl = pictureUrl;
@@ -41,12 +43,12 @@ public class ClientDTO {
         this.name = name;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Boolean getStatus() {
@@ -78,7 +80,7 @@ public class ClientDTO {
         return "ClientDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", createDate=" + createDate +
+                ", createdDate=" + createdDate +
                 ", status=" + status +
                 ", website='" + website + '\'' +
                 ", pictureUrl='" + pictureUrl + '\'' +

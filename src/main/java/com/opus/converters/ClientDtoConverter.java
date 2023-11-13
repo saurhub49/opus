@@ -11,7 +11,7 @@ public class ClientDtoConverter {
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());
-        clientDTO.setCreateDate(client.getCreateDate());
+        clientDTO.setCreatedDate(client.getCreateDate());
         clientDTO.setStatus(client.getStatus());
         clientDTO.setWebsite(client.getWebsite());
         clientDTO.setPictureUrl(client.getPictureUrl());
@@ -20,8 +20,9 @@ public class ClientDtoConverter {
 
     public Client mapToEntity(ClientDTO clientDTO) {
         Client client = new Client();
+        client.setId(clientDTO.getId());
         client.setName(clientDTO.getName());
-        client.setCreateDate(clientDTO.getCreateDate());
+        client.setCreateDate(clientDTO.getCreatedDate());
         client.setStatus(clientDTO.getStatus());
         client.setWebsite(clientDTO.getWebsite());
         client.setPictureUrl(clientDTO.getPictureUrl());
