@@ -1,6 +1,7 @@
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import CallIcon from '@mui/icons-material/Call';
+import BusinessIcon from '@mui/icons-material/Business';
 import SidebarItem from "../interfaces/sidebarItem.interface";
 
 export const getSideBarItems = (): SidebarItem[] => {
@@ -23,5 +24,11 @@ export const getSideBarItems = (): SidebarItem[] => {
             path: '/contact',
             icon: <CallIcon />
         },
+        {
+            id: 4,
+            label: 'Clients',
+            path: '/clients',
+            icon: <BusinessIcon />
+        }
     ]
 }

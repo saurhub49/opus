@@ -59,13 +59,13 @@ export interface ClientDTO {
      * @type {string}
      * @memberof ClientDTO
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof ClientDTO
      */
-    'createDate'?: string;
+    'createdDate'?: string;
     /**
      * 
      * @type {boolean}

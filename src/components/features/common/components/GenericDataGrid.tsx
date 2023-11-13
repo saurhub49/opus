@@ -1,15 +1,13 @@
-import { DataGrid, GridToolbar } from "@mui/x-data-grid"
-import DataGridModel from "../enums/DataGridModel.enums";
-import useGenericDataGrid from "../hooks/useGenericDatGrid.hooks";
-
+import { DataGrid, GridColDef, GridEventListener, GridToolbar } from "@mui/x-data-grid"
 
 interface GenericDataGridProps {
-    dataGridModel: DataGridModel;
+    columns: GridColDef[];
+    rows: any[];
+    onRowClick?: GridEventListener<"rowClick"> | undefined;
 }
 
 const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
-    const { dataGridModel } = props;
-    const { rows, columns } = useGenericDataGrid(dataGridModel);
+    const { rows, columns, onRowClick } = props;
 
     return (
         <DataGrid
@@ -39,6 +37,7 @@ const GenericDataGrid: React.FC<GenericDataGridProps> = (props) => {
                 },
             }}
             density="comfortable"
+            onRowClick={onRowClick}
         />
     )
 }
