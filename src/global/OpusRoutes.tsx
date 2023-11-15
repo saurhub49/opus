@@ -2,15 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import About from "../test/About";
 import PageContainer from "../components/layout/components/PageContainer";
 import Login from "../components/welcome/components/Login";
-import useAxiosConfig from "./hooks/useAxiosConfig";
 import EmployeeHome from "../components/features/employees/components/EmployeeHome";
 import EmployeeProfile from "../components/features/employees/components/EmployeeProfile";
 import ClientsHome from "../components/features/clients/components/ClientsHome";
+import RoleBasedAuthorizationConfig from "../components/features/rbac/components/RoleBasedAuthorizationConfig";
 
 
 const OpusRoutes: React.FC = () => {
-    useAxiosConfig();
-
     return (
         <BrowserRouter>
             <Routes>
@@ -20,6 +18,7 @@ const OpusRoutes: React.FC = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<EmployeeProfile />} />
                     <Route path="/clients" element={<ClientsHome />} />
+                    <Route path="/roletypes" element={<RoleBasedAuthorizationConfig />} />
                 </Route>
             </Routes>
         </BrowserRouter>
