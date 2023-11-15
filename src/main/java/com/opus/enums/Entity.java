@@ -5,7 +5,6 @@ public enum Entity {
     CLIENT,
     DEPARTMENT,
     ROLE_TYPE,
-    PERMISSION,
     ROLE,
-    EMPLOYMENT_DETAIL
+    EMPLOYMENT_DETAILS;
 }

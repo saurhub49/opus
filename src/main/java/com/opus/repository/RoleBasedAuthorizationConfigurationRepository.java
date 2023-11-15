@@ -10,12 +10,13 @@ import org.springframework.data.jpa.repository.Query;
 public interface RoleBasedAuthorizationConfigurationRepository extends JpaRepository<RoleBasedAuthorizationConfiguration, Long> {
 
     @Query("SELECT CASE WHEN COUNT(rbac) > 0 THEN true ELSE false END FROM RoleBasedAuthorizationConfiguration rbac " +
-            "WHERE rbac.roleTypeId = :roleTypeId " +
+            "WHERE rbac.roleType = :roleType " +
             "AND rbac.entity = :entity " +
             "AND rbac.permission = :permission")
     Boolean existsByRoleTypeEntityAndPermission(
-            RoleType roleTypeId,
+            RoleType roleType,
             Entity entity,
             Permission permission);
-    
+
+    void deleteByRoleTypeAndEntityAndPermission(RoleType roleType, Entity entity, Permission permission);
 }
