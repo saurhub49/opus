@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class CommonExceptionHandler {
-
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<CommonErrorResponse> handleAccessDeniedException(AccessDeniedException exception) {
-        CommonErrorResponse commonErrorResponse = new CommonErrorResponse(403, exception.getMessage());
-        return new ResponseEntity<>(commonErrorResponse, HttpStatus.FORBIDDEN);
+    public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException exception) {
+        CommonErrorResponse commonErrorResponse = new CommonErrorResponse(HttpStatus.FORBIDDEN.value(), exception.getMessage());
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<CommonErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception) {
-        CommonErrorResponse commonErrorResponse = new CommonErrorResponse(404, exception.getMessage());
-        return new ResponseEntity<>(commonErrorResponse, HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException exception) {
+        CommonErrorResponse commonErrorResponse = new CommonErrorResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage());
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(OpusApplicationException.class)
+    public ResponseEntity<String> handleOpusApplicationException(OpusApplicationException exception) {
+        CommonErrorResponse commonErrorResponse = new CommonErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

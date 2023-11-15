@@ -1,24 +1,38 @@
 package com.opus.service;
 
+import com.opus.dto.request.RoleTypeAuthorizationConfigurationDTO;
 import com.opus.dto.request.RoleTypeRequestDTO;
+import com.opus.dto.response.RoleTypeAuthorization;
 import com.opus.dto.response.RoleTypeDTO;
+import com.opus.dto.response.RoleTypeEntityPermission;
+import com.opus.entity.RoleBasedAuthorizationConfiguration;
 import com.opus.entity.RoleType;
+import com.opus.enums.Entity;
+import com.opus.enums.Permission;
+import com.opus.exceptions.OpusApplicationException;
+import com.opus.repository.RoleBasedAuthorizationConfigurationRepository;
 import com.opus.repository.RoleTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class RoleTypeService {
 
     private final RoleTypeRepository roleTypeRepository;
+    private final RoleBasedAuthorizationConfigurationRepository authorizationConfigurationRepository;
 
     @Autowired
-    public RoleTypeService(RoleTypeRepository roleTypeRepository) {
+    public RoleTypeService(RoleTypeRepository roleTypeRepository, RoleBasedAuthorizationConfigurationRepository authorizationConfigurationRepository) {
         this.roleTypeRepository = roleTypeRepository;
+        this.authorizationConfigurationRepository = authorizationConfigurationRepository;
     }
 
     public RoleTypeDTO createRoleType(RoleTypeRequestDTO roleTypeDto) {
@@ -57,5 +71,62 @@ public class RoleTypeService {
         RoleType existingRoleType = roleTypeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("RoleType not found with id: " + id));
         roleTypeRepository.delete(existingRoleType);
+    }
+
+    public List<RoleTypeAuthorization> getAllRoleTypeAuthorizations() {
+        List<RoleType> roleTypes = roleTypeRepository.findAll();
+
+        List<RoleTypeAuthorization> roleTypeAuthorizations = new ArrayList<>();
+
+        for (RoleType roleType : roleTypes) {
+            RoleTypeAuthorization newRoleTypeAuthorization = new RoleTypeAuthorization();
+            Map<Entity, RoleTypeEntityPermission> permissions = new HashMap<>();
+
+            for (Entity entity : Entity.values()) {
+                permissions.put(entity, new RoleTypeEntityPermission(false, false, false, false));
+            }
+
+            for (RoleBasedAuthorizationConfiguration authorizationConfiguration : roleType.getAuthorizations()) {
+                RoleTypeEntityPermission currentPermission = permissions.get(authorizationConfiguration.getEntity());
+
+                if (authorizationConfiguration.getPermission() == Permission.READ) {
+                    currentPermission.setRead(true);
+                } else if (authorizationConfiguration.getPermission() == Permission.CREATE) {
+                    currentPermission.setCreate(true);
+                } else if (authorizationConfiguration.getPermission() == Permission.UPDATE) {
+                    currentPermission.setUpdate(true);
+                } else if (authorizationConfiguration.getPermission() == Permission.DELETE) {
+                    currentPermission.setDelete(true);
+                }
+
+            }
+
+            newRoleTypeAuthorization.setId(roleType.getId());
+            newRoleTypeAuthorization.setName(roleType.getName());
+            newRoleTypeAuthorization.setDescription(roleType.getDescription());
+            newRoleTypeAuthorization.setEntityPermissions(permissions);
+
+            roleTypeAuthorizations.add(newRoleTypeAuthorization);
+        }
+
+        return roleTypeAuthorizations;
+    }
+
+    @Transactional
+    public void addOrRemoveRoleTypeAuthorizationConfiguration(RoleTypeAuthorizationConfigurationDTO roleTypeAuthorizationConfigurationDTO) throws NoSuchFieldException {
+        Boolean authorizationExists = authorizationConfigurationRepository.existsByRoleTypeEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission());
+        if (roleTypeAuthorizationConfigurationDTO.value()) {
+            if (authorizationExists) {
+                throw new OpusApplicationException("Required permission already exist!");
+            }
+
+            authorizationConfigurationRepository.save(new RoleBasedAuthorizationConfiguration(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission()));
+        } else {
+            if (!authorizationExists) {
+                throw new OpusApplicationException("Required permission does not exist!");
+            }
+
+            authorizationConfigurationRepository.deleteByRoleTypeAndEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission());
+        }
     }
 }

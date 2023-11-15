@@ -4,5 +4,5 @@ public enum RoleTypeName {
     SUPER_ADMIN,
     ADMIN,
     MANAGER,
-    EMPLOYEE
+    EMPLOYEE;
 }

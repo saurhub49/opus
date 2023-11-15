@@ -25,6 +25,11 @@ public class RoleType {
     public RoleType() {
     }
 
+    public RoleType(Long id) {
+        this.id = id;
+    }
+
+
     public RoleType(Long id, RoleTypeName name, String description) {
         this.id = id;
         this.name = name;
