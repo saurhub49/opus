@@ -2,6 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import CallIcon from '@mui/icons-material/Call';
 import BusinessIcon from '@mui/icons-material/Business';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import SidebarItem from "../interfaces/sidebarItem.interface";
 
 export const getSideBarItems = (): SidebarItem[] => {
@@ -29,6 +30,12 @@ export const getSideBarItems = (): SidebarItem[] => {
             label: 'Clients',
             path: '/clients',
             icon: <BusinessIcon />
+        },
+        {
+            id: 5,
+            label: 'Role Type Permissions',
+            path: '/roletypes',
+            icon: <VpnKeyIcon />
         }
     ]
 }

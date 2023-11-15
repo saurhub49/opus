@@ -19,10 +19,10 @@ const GenericPageTemplate: React.FC<PageTemplateProps> = (props) => {
         </Box > : <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box>
-                    <Typography variant="h4" component="h1" paddingY={1}>
+                    <Typography gutterBottom variant="h4" component="div">
                         {title}
                     </Typography>
-                    <Typography variant="subtitle1" component="div" paddingBottom={1}>
+                    <Typography component="div" paddingBottom={1} variant="body2" color="text.secondary">
                         {subtitle}
                     </Typography>
                 </Box>

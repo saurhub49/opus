@@ -5,14 +5,16 @@ import authSlice from "../../components/welcome/reducer/authSlice.slice"
 import sidebarSlice from "../../components/layout/reducer/sidebar.slice";
 import snackbarSlice from "../snackbar/reducers/snackbar.slice";
 import employeeSlice from "../../components/features/employees/reducers/employee.slice";
-import { clientActions } from "../../components/features/clients/apis/clients.api";
+import { clientApi } from "../../components/features/clients/apis/clients.api";
+import { rbacApi } from '../../components/features/rbac/apis/rbac.api';
 
 const rootReducer = combineReducers({
     snackbar: snackbarSlice,
     auth: authSlice,
     sidebar: sidebarSlice,
     employees: employeeSlice,
-    [clientActions.reducerPath]: clientActions.reducer
+    [clientApi.reducerPath]: clientApi.reducer,
+    [rbacApi.reducerPath]: rbacApi.reducer
 });
 
 const store = configureStore({
@@ -21,7 +23,8 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false,
         })
-            .concat(clientActions.middleware)
+            .concat(clientApi.middleware)
+            .concat(rbacApi.middleware)
             .concat(errorMiddleware),
 });
 

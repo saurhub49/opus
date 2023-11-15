@@ -300,6 +300,98 @@ export interface RoleRequestDTO {
 /**
  * 
  * @export
+ * @interface RoleTypeAuthorization
+ */
+export interface RoleTypeAuthorization {
+    /**
+     * 
+     * @type {number}
+     * @memberof RoleTypeAuthorization
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleTypeAuthorization
+     */
+    'name'?: RoleTypeAuthorizationNameEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleTypeAuthorization
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: RoleTypeEntityPermission; }}
+     * @memberof RoleTypeAuthorization
+     */
+    'entityPermissions'?: { [key: string]: RoleTypeEntityPermission; };
+}
+
+export const RoleTypeAuthorizationNameEnum = {
+    SuperAdmin: 'SUPER_ADMIN',
+    Admin: 'ADMIN',
+    Manager: 'MANAGER',
+    Employee: 'EMPLOYEE'
+} as const;
+
+export type RoleTypeAuthorizationNameEnum = typeof RoleTypeAuthorizationNameEnum[keyof typeof RoleTypeAuthorizationNameEnum];
+
+/**
+ * 
+ * @export
+ * @interface RoleTypeAuthorizationConfigurationDTO
+ */
+export interface RoleTypeAuthorizationConfigurationDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof RoleTypeAuthorizationConfigurationDTO
+     */
+    'roleTypeId': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleTypeAuthorizationConfigurationDTO
+     */
+    'entity': RoleTypeAuthorizationConfigurationDTOEntityEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleTypeAuthorizationConfigurationDTO
+     */
+    'permission': RoleTypeAuthorizationConfigurationDTOPermissionEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoleTypeAuthorizationConfigurationDTO
+     */
+    'value': boolean;
+}
+
+export const RoleTypeAuthorizationConfigurationDTOEntityEnum = {
+    User: 'USER',
+    Client: 'CLIENT',
+    Department: 'DEPARTMENT',
+    RoleType: 'ROLE_TYPE',
+    Role: 'ROLE',
+    EmploymentDetails: 'EMPLOYMENT_DETAILS'
+} as const;
+
+export type RoleTypeAuthorizationConfigurationDTOEntityEnum = typeof RoleTypeAuthorizationConfigurationDTOEntityEnum[keyof typeof RoleTypeAuthorizationConfigurationDTOEntityEnum];
+export const RoleTypeAuthorizationConfigurationDTOPermissionEnum = {
+    Create: 'CREATE',
+    Read: 'READ',
+    Update: 'UPDATE',
+    Delete: 'DELETE'
+} as const;
+
+export type RoleTypeAuthorizationConfigurationDTOPermissionEnum = typeof RoleTypeAuthorizationConfigurationDTOPermissionEnum[keyof typeof RoleTypeAuthorizationConfigurationDTOPermissionEnum];
+
+/**
+ * 
+ * @export
  * @interface RoleTypeDTO
  */
 export interface RoleTypeDTO {
@@ -321,6 +413,37 @@ export interface RoleTypeDTO {
      * @memberof RoleTypeDTO
      */
     'description'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RoleTypeEntityPermission
+ */
+export interface RoleTypeEntityPermission {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoleTypeEntityPermission
+     */
+    'read'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoleTypeEntityPermission
+     */
+    'create'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoleTypeEntityPermission
+     */
+    'update'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoleTypeEntityPermission
+     */
+    'delete'?: boolean;
 }
 /**
  * 
@@ -1807,11 +1930,46 @@ export class RoleControllerApi extends BaseAPI {
 
 
 /**
- * RoleTypeControllerApi - axios parameter creator
+ * RoleTypesApi - axios parameter creator
  * @export
  */
-export const RoleTypeControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const RoleTypesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @param {RoleTypeAuthorizationConfigurationDTO} roleTypeAuthorizationConfigurationDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addOrRemoveRoleTypeAuthorization: async (roleTypeAuthorizationConfigurationDTO: RoleTypeAuthorizationConfigurationDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roleTypeAuthorizationConfigurationDTO' is not null or undefined
+            assertParamExists('addOrRemoveRoleTypeAuthorization', 'roleTypeAuthorizationConfigurationDTO', roleTypeAuthorizationConfigurationDTO)
+            const localVarPath = `/roletypes/authorizations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(roleTypeAuthorizationConfigurationDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @param {RoleTypeRequestDTO} roleTypeRequestDTO 
@@ -1866,6 +2024,35 @@ export const RoleTypeControllerApiAxiosParamCreator = function (configuration?: 
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRoleTypeAuthorizations: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/roletypes/authorizations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -1985,12 +2172,22 @@ export const RoleTypeControllerApiAxiosParamCreator = function (configuration?: 
 };
 
 /**
- * RoleTypeControllerApi - functional programming interface
+ * RoleTypesApi - functional programming interface
  * @export
  */
-export const RoleTypeControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = RoleTypeControllerApiAxiosParamCreator(configuration)
+export const RoleTypesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoleTypesApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @param {RoleTypeAuthorizationConfigurationDTO} roleTypeAuthorizationConfigurationDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO: RoleTypeAuthorizationConfigurationDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * 
          * @param {RoleTypeRequestDTO} roleTypeRequestDTO 
@@ -2009,6 +2206,15 @@ export const RoleTypeControllerApiFp = function(configuration?: Configuration) {
          */
         async deleteRoleType(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteRoleType(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllRoleTypeAuthorizations(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoleTypeAuthorization>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllRoleTypeAuthorizations(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -2045,12 +2251,21 @@ export const RoleTypeControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * RoleTypeControllerApi - factory interface
+ * RoleTypesApi - factory interface
  * @export
  */
-export const RoleTypeControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = RoleTypeControllerApiFp(configuration)
+export const RoleTypesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoleTypesApiFp(configuration)
     return {
+        /**
+         * 
+         * @param {RoleTypeAuthorizationConfigurationDTO} roleTypeAuthorizationConfigurationDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO: RoleTypeAuthorizationConfigurationDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @param {RoleTypeRequestDTO} roleTypeRequestDTO 
@@ -2068,6 +2283,14 @@ export const RoleTypeControllerApiFactory = function (configuration?: Configurat
          */
         deleteRoleType(id: number, options?: any): AxiosPromise<void> {
             return localVarFp.deleteRoleType(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRoleTypeAuthorizations(options?: any): AxiosPromise<Array<RoleTypeAuthorization>> {
+            return localVarFp.getAllRoleTypeAuthorizations(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2100,21 +2323,32 @@ export const RoleTypeControllerApiFactory = function (configuration?: Configurat
 };
 
 /**
- * RoleTypeControllerApi - object-oriented interface
+ * RoleTypesApi - object-oriented interface
  * @export
- * @class RoleTypeControllerApi
+ * @class RoleTypesApi
  * @extends {BaseAPI}
  */
-export class RoleTypeControllerApi extends BaseAPI {
+export class RoleTypesApi extends BaseAPI {
+    /**
+     * 
+     * @param {RoleTypeAuthorizationConfigurationDTO} roleTypeAuthorizationConfigurationDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTypesApi
+     */
+    public addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO: RoleTypeAuthorizationConfigurationDTO, options?: AxiosRequestConfig) {
+        return RoleTypesApiFp(this.configuration).addOrRemoveRoleTypeAuthorization(roleTypeAuthorizationConfigurationDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {RoleTypeRequestDTO} roleTypeRequestDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTypeControllerApi
+     * @memberof RoleTypesApi
      */
     public createRoleType(roleTypeRequestDTO: RoleTypeRequestDTO, options?: AxiosRequestConfig) {
-        return RoleTypeControllerApiFp(this.configuration).createRoleType(roleTypeRequestDTO, options).then((request) => request(this.axios, this.basePath));
+        return RoleTypesApiFp(this.configuration).createRoleType(roleTypeRequestDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2122,20 +2356,30 @@ export class RoleTypeControllerApi extends BaseAPI {
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTypeControllerApi
+     * @memberof RoleTypesApi
      */
     public deleteRoleType(id: number, options?: AxiosRequestConfig) {
-        return RoleTypeControllerApiFp(this.configuration).deleteRoleType(id, options).then((request) => request(this.axios, this.basePath));
+        return RoleTypesApiFp(this.configuration).deleteRoleType(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTypeControllerApi
+     * @memberof RoleTypesApi
+     */
+    public getAllRoleTypeAuthorizations(options?: AxiosRequestConfig) {
+        return RoleTypesApiFp(this.configuration).getAllRoleTypeAuthorizations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoleTypesApi
      */
     public getAllRoleTypes(options?: AxiosRequestConfig) {
-        return RoleTypeControllerApiFp(this.configuration).getAllRoleTypes(options).then((request) => request(this.axios, this.basePath));
+        return RoleTypesApiFp(this.configuration).getAllRoleTypes(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2143,10 +2387,10 @@ export class RoleTypeControllerApi extends BaseAPI {
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTypeControllerApi
+     * @memberof RoleTypesApi
      */
     public getRoleTypeById(id: number, options?: AxiosRequestConfig) {
-        return RoleTypeControllerApiFp(this.configuration).getRoleTypeById(id, options).then((request) => request(this.axios, this.basePath));
+        return RoleTypesApiFp(this.configuration).getRoleTypeById(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2155,10 +2399,10 @@ export class RoleTypeControllerApi extends BaseAPI {
      * @param {RoleTypeRequestDTO} roleTypeRequestDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleTypeControllerApi
+     * @memberof RoleTypesApi
      */
     public updateRoleType(id: number, roleTypeRequestDTO: RoleTypeRequestDTO, options?: AxiosRequestConfig) {
-        return RoleTypeControllerApiFp(this.configuration).updateRoleType(id, roleTypeRequestDTO, options).then((request) => request(this.axios, this.basePath));
+        return RoleTypesApiFp(this.configuration).updateRoleType(id, roleTypeRequestDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
