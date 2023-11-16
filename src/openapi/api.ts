@@ -314,7 +314,7 @@ export interface RoleTypeAuthorization {
      * @type {string}
      * @memberof RoleTypeAuthorization
      */
-    'name'?: RoleTypeAuthorizationNameEnum;
+    'name'?: string;
     /**
      * 
      * @type {string}
@@ -328,16 +328,6 @@ export interface RoleTypeAuthorization {
      */
     'entityPermissions'?: { [key: string]: RoleTypeEntityPermission; };
 }
-
-export const RoleTypeAuthorizationNameEnum = {
-    SuperAdmin: 'SUPER_ADMIN',
-    Admin: 'ADMIN',
-    Manager: 'MANAGER',
-    Employee: 'EMPLOYEE'
-} as const;
-
-export type RoleTypeAuthorizationNameEnum = typeof RoleTypeAuthorizationNameEnum[keyof typeof RoleTypeAuthorizationNameEnum];
-
 /**
  * 
  * @export
@@ -355,7 +345,7 @@ export interface RoleTypeAuthorizationConfigurationDTO {
      * @type {string}
      * @memberof RoleTypeAuthorizationConfigurationDTO
      */
-    'entity': RoleTypeAuthorizationConfigurationDTOEntityEnum;
+    'entity': string;
     /**
      * 
      * @type {string}
@@ -370,16 +360,6 @@ export interface RoleTypeAuthorizationConfigurationDTO {
     'value': boolean;
 }
 
-export const RoleTypeAuthorizationConfigurationDTOEntityEnum = {
-    User: 'USER',
-    Client: 'CLIENT',
-    Department: 'DEPARTMENT',
-    RoleType: 'ROLE_TYPE',
-    Role: 'ROLE',
-    EmploymentDetails: 'EMPLOYMENT_DETAILS'
-} as const;
-
-export type RoleTypeAuthorizationConfigurationDTOEntityEnum = typeof RoleTypeAuthorizationConfigurationDTOEntityEnum[keyof typeof RoleTypeAuthorizationConfigurationDTOEntityEnum];
 export const RoleTypeAuthorizationConfigurationDTOPermissionEnum = {
     Create: 'CREATE',
     Read: 'READ',
@@ -1562,21 +1542,18 @@ export class DepartmentsApi extends BaseAPI {
 
 
 /**
- * RoleControllerApi - axios parameter creator
+ * RoleApi - axios parameter creator
  * @export
  */
-export const RoleControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const RoleApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {number} userId 
          * @param {RoleRequestDTO} roleRequestDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRole: async (userId: number, roleRequestDTO: RoleRequestDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('createRole', 'userId', userId)
+        createRole: async (roleRequestDTO: RoleRequestDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'roleRequestDTO' is not null or undefined
             assertParamExists('createRole', 'roleRequestDTO', roleRequestDTO)
             const localVarPath = `/roles/create`;
@@ -1590,10 +1567,6 @@ export const RoleControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (userId !== undefined) {
-                localVarQueryParameter['userId'] = userId;
-            }
 
 
     
@@ -1747,21 +1720,20 @@ export const RoleControllerApiAxiosParamCreator = function (configuration?: Conf
 };
 
 /**
- * RoleControllerApi - functional programming interface
+ * RoleApi - functional programming interface
  * @export
  */
-export const RoleControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = RoleControllerApiAxiosParamCreator(configuration)
+export const RoleApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoleApiAxiosParamCreator(configuration)
     return {
         /**
          * 
-         * @param {number} userId 
          * @param {RoleRequestDTO} roleRequestDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createRole(userId: number, roleRequestDTO: RoleRequestDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleDTO>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createRole(userId, roleRequestDTO, options);
+        async createRole(roleRequestDTO: RoleRequestDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoleDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRole(roleRequestDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1808,21 +1780,20 @@ export const RoleControllerApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * RoleControllerApi - factory interface
+ * RoleApi - factory interface
  * @export
  */
-export const RoleControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = RoleControllerApiFp(configuration)
+export const RoleApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoleApiFp(configuration)
     return {
         /**
          * 
-         * @param {number} userId 
          * @param {RoleRequestDTO} roleRequestDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRole(userId: number, roleRequestDTO: RoleRequestDTO, options?: any): AxiosPromise<RoleDTO> {
-            return localVarFp.createRole(userId, roleRequestDTO, options).then((request) => request(axios, basePath));
+        createRole(roleRequestDTO: RoleRequestDTO, options?: any): AxiosPromise<RoleDTO> {
+            return localVarFp.createRole(roleRequestDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1864,22 +1835,21 @@ export const RoleControllerApiFactory = function (configuration?: Configuration,
 };
 
 /**
- * RoleControllerApi - object-oriented interface
+ * RoleApi - object-oriented interface
  * @export
- * @class RoleControllerApi
+ * @class RoleApi
  * @extends {BaseAPI}
  */
-export class RoleControllerApi extends BaseAPI {
+export class RoleApi extends BaseAPI {
     /**
      * 
-     * @param {number} userId 
      * @param {RoleRequestDTO} roleRequestDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleControllerApi
+     * @memberof RoleApi
      */
-    public createRole(userId: number, roleRequestDTO: RoleRequestDTO, options?: AxiosRequestConfig) {
-        return RoleControllerApiFp(this.configuration).createRole(userId, roleRequestDTO, options).then((request) => request(this.axios, this.basePath));
+    public createRole(roleRequestDTO: RoleRequestDTO, options?: AxiosRequestConfig) {
+        return RoleApiFp(this.configuration).createRole(roleRequestDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1887,20 +1857,20 @@ export class RoleControllerApi extends BaseAPI {
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleControllerApi
+     * @memberof RoleApi
      */
     public deleteRole(id: number, options?: AxiosRequestConfig) {
-        return RoleControllerApiFp(this.configuration).deleteRole(id, options).then((request) => request(this.axios, this.basePath));
+        return RoleApiFp(this.configuration).deleteRole(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleControllerApi
+     * @memberof RoleApi
      */
     public getAllRoles(options?: AxiosRequestConfig) {
-        return RoleControllerApiFp(this.configuration).getAllRoles(options).then((request) => request(this.axios, this.basePath));
+        return RoleApiFp(this.configuration).getAllRoles(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1908,10 +1878,10 @@ export class RoleControllerApi extends BaseAPI {
      * @param {number} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleControllerApi
+     * @memberof RoleApi
      */
     public getRole(id: number, options?: AxiosRequestConfig) {
-        return RoleControllerApiFp(this.configuration).getRole(id, options).then((request) => request(this.axios, this.basePath));
+        return RoleApiFp(this.configuration).getRole(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1920,10 +1890,10 @@ export class RoleControllerApi extends BaseAPI {
      * @param {RoleRequestDTO} roleRequestDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RoleControllerApi
+     * @memberof RoleApi
      */
     public updateRole(id: number, roleRequestDTO: RoleRequestDTO, options?: AxiosRequestConfig) {
-        return RoleControllerApiFp(this.configuration).updateRole(id, roleRequestDTO, options).then((request) => request(this.axios, this.basePath));
+        return RoleApiFp(this.configuration).updateRole(id, roleRequestDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

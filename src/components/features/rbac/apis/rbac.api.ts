@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { RoleTypeAuthorization, RoleTypeAuthorizationConfigurationDTO, RoleTypeAuthorizationConfigurationDTOEntityEnum, RoleTypeAuthorizationConfigurationDTOPermissionEnum, RoleTypesApi } from "../../../../openapi";
+import { RoleTypeAuthorization, RoleTypeAuthorizationConfigurationDTO, RoleTypeAuthorizationConfigurationDTOPermissionEnum, RoleTypesApi } from "../../../../openapi";
 import { BASE_PATH } from "../../../../openapi/base";
 
 
@@ -16,7 +16,7 @@ export const rbacApi = createApi({
             },
         }),
         addOrRemoveRoleTypeAuthorizations: builder
-            .mutation<void, { entity: RoleTypeAuthorizationConfigurationDTOEntityEnum, permission: RoleTypeAuthorizationConfigurationDTOPermissionEnum, roleTypeId: number, value: boolean }>
+            .mutation<void, { entity: string, permission: RoleTypeAuthorizationConfigurationDTOPermissionEnum, roleTypeId: number, value: boolean }>
             ({
                 queryFn: async ({ entity, permission, roleTypeId, value }) => {
                     const roleTypeAuthorizationConfigurationDTO: RoleTypeAuthorizationConfigurationDTO = {

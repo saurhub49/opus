@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularLoading from './CircularLoading';
 
 interface PageTemplateProps {
     title: string;
@@ -14,9 +14,7 @@ interface PageTemplateProps {
 const GenericPageTemplate: React.FC<PageTemplateProps> = (props) => {
     const { title, subtitle, pageActions, loading, children } = props;
     return (
-        loading ? <Box sx={{ display: 'flex', justifyContent: 'center' }} >
-            <CircularProgress />
-        </Box > : <Box>
+        loading ? <CircularLoading /> : <Box>
             <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Box>
                     <Typography gutterBottom variant="h4" component="div">

@@ -6,6 +6,8 @@ import EmployeeHome from "../components/features/employees/components/EmployeeHo
 import EmployeeProfile from "../components/features/employees/components/EmployeeProfile";
 import ClientsHome from "../components/features/clients/components/ClientsHome";
 import RoleBasedAuthorizationConfig from "../components/features/rbac/components/RoleBasedAuthorizationConfig";
+import RolesHome from "../components/features/roles/components/RolesHome";
+import DepartmentsHome from "../components/features/departments/components/DepartmentsHome";
 
 
 const OpusRoutes: React.FC = () => {
@@ -17,6 +19,8 @@ const OpusRoutes: React.FC = () => {
                     <Route path="/home" element={<EmployeeHome />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<EmployeeProfile />} />
+                    <Route path="/departments" element={<DepartmentsHome />} />
+                    <Route path="/roles" element={<RolesHome />} />
                     <Route path="/clients" element={<ClientsHome />} />
                     <Route path="/roletypes" element={<RoleBasedAuthorizationConfig />} />
                 </Route>

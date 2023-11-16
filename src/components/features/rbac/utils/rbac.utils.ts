@@ -1,15 +1,4 @@
-import { RoleTypeAuthorizationConfigurationDTOEntityEnum, RoleTypeAuthorizationConfigurationDTOPermissionEnum } from "../../../../openapi"
-
-
-export const convertStringToRoleTypeAuthorizationConfigurationDTOEntityEnum = (inputString: string) => {
-    const enumValues = Object.values(RoleTypeAuthorizationConfigurationDTOEntityEnum);
-
-    if (enumValues.includes(inputString as typeof enumValues[number])) {
-        return inputString as typeof enumValues[number];
-    }
-
-    return null;
-}
+import { RoleTypeAuthorizationConfigurationDTOPermissionEnum } from "../../../../openapi"
 
 export const convertStringToRoleTypeAuthorizationConfigurationDTOPermissionEnum = (inputString: string) => {
     const enumValues = Object.values(RoleTypeAuthorizationConfigurationDTOPermissionEnum);
