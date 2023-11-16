@@ -17,7 +17,7 @@ const OpusAppBar = () => {
     }, [dispatch, isOpen]);
 
     return (
-        <AppBar elevation={4} position='relative' sx={{
+        <AppBar elevation={4} position='sticky' sx={{
             px: 2,
             py: 1,
             width: '100%',

@@ -1,7 +1,6 @@
 import { Avatar } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import moment from "moment";
-import { convertUppercaseStringsWithUnderscoresToReadableString } from "./common.utils";
 
 
 export const employeeDataGridColumns: GridColDef[] = [
@@ -74,7 +73,6 @@ export const rolesDataGridColumns: GridColDef[] = [
         field: 'roleTypeName',
         headerName: 'Role Type Name',
         flex: 1,
-        valueGetter: ({ value }) => value && convertUppercaseStringsWithUnderscoresToReadableString(value as string),
     },
 ]
 
@@ -124,12 +122,12 @@ export const employeesDataGridColumns: GridColDef[] = [
     },
     {
         "field": "roleName",
-        "headerName": "Role Name",
+        "headerName": "Role",
         "flex": 1
     },
     {
         "field": "departmentName",
-        "headerName": "Department Name",
+        "headerName": "Department",
         "flex": 1
     },
     {
