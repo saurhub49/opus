@@ -14,4 +14,6 @@ public @interface CheckAuthorization {
     Permission permission() default Permission.READ;
 
     Entity entity() default Entity.CLIENT;
+
+    boolean belongsToClient() default false;
 }

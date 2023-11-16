@@ -27,8 +27,8 @@ public class DepartmentService {
         this.userRepository = userRepository;
     }
 
-    public List<DepartmentDTO> getALlDepartments() {
-        return departmentRepository.findAll().stream().map(DepartmentDTO::fromEntity).collect(Collectors.toList());
+    public List<DepartmentDTO> getALlDepartments(Long userId) {
+        return departmentRepository.findAll(userRepository.findClientIdByUserId(userId)).stream().map(DepartmentDTO::fromEntity).collect(Collectors.toList());
     }
 
     public DepartmentDTO getDepartment(Long id) {
@@ -40,7 +40,7 @@ public class DepartmentService {
     public DepartmentDTO createDepartment(Long userId, DepartmentRequestDTO departmentRequestDTO) {
         Department department = new Department();
 
-        Client client = userRepository.findClientIdByUserId(userId);
+        Client client = userRepository.findClientByUserId(userId);
 
         department.setName(departmentRequestDTO.name());
         department.setDescription(departmentRequestDTO.description());

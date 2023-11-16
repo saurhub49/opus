@@ -1,7 +1,5 @@
 package com.opus.dto.request;
 
-import com.opus.enums.RoleTypeName;
-
-public record RoleTypeRequestDTO(RoleTypeName name,
+public record RoleTypeRequestDTO(String name,
                                  String description) {
 }

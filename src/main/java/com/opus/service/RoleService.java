@@ -28,8 +28,8 @@ public class RoleService {
         this.userRepository = userRepository;
     }
 
-    public List<RoleDTO> getAllRoles() {
-        return roleRepository.findAll().stream().map(RoleDTO::fromEntity).collect(Collectors.toList());
+    public List<RoleDTO> getAllRoles(Long userId) {
+        return roleRepository.findAll(userRepository.findClientIdByUserId(userId)).stream().map(RoleDTO::fromEntity).collect(Collectors.toList());
     }
 
     public RoleDTO getRole(Long id) {
@@ -46,7 +46,7 @@ public class RoleService {
         role.setCreatedAt(new Date());
         role.setRoleType(getRoleTypeById(roleRequestDTO.roleTypeId()));
         role.setCreatedBy(userId);
-        role.setClient(userRepository.findClientIdByUserId(userId));
+        role.setClient(userRepository.findClientByUserId(userId));
 
         role = roleRepository.save(role);
 

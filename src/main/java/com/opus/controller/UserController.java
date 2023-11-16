@@ -23,7 +23,7 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
-    //@CheckAuthorization(permission = Permission.READ, entity = Entity.USER)
+    @CheckAuthorization(entity = Entity.USER, permission = Permission.READ)
     @GetMapping
     public ResponseEntity<List<UserDetailsDTO>> getAllUsers() {
         List<UserDetailsDTO> response = userService.getAllUsers();
@@ -31,6 +31,7 @@ public class UserController extends BaseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CheckAuthorization(entity = Entity.USER, permission = Permission.READ, belongsToClient = true)
     @GetMapping("/{userId}")
     public ResponseEntity<UserDetailsDTO> getUser(@PathVariable Long userId) {
         UserDetailsDTO response = userService.getUser(userId);
@@ -38,6 +39,7 @@ public class UserController extends BaseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CheckAuthorization(entity = Entity.USER, permission = Permission.UPDATE, belongsToClient = true)
     @PutMapping("/{userId}")
     public ResponseEntity<UserDetailsDTO> updateUser(@PathVariable Long userId, @RequestBody UserUpdateDTO userUpdateDto) {
         UserDetailsDTO response = userService.updateUser(userId, userUpdateDto);
@@ -45,6 +47,7 @@ public class UserController extends BaseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CheckAuthorization(entity = Entity.USER, permission = Permission.DELETE, belongsToClient = true)
     @DeleteMapping("/{userId}")
     public ResponseEntity<Long> deleteUser(@PathVariable Long userId) {
         Long response = userService.deleteUser(userId);
@@ -52,6 +55,7 @@ public class UserController extends BaseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CheckAuthorization(entity = Entity.USER, permission = Permission.READ)
     @GetMapping("/profile")
     public ResponseEntity<ProfileDetailsDTO> getUserProfile() {
         Long userId = getUserId();

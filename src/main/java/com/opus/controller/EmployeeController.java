@@ -1,6 +1,9 @@
 package com.opus.controller;
 
+import com.opus.annotations.CheckAuthorization;
 import com.opus.dto.response.EmployeeDetailsDTO;
+import com.opus.enums.Entity;
+import com.opus.enums.Permission;
 import com.opus.service.EmployeeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 @Tag(name = "Employee", description = "Endpoint for employees api")
-public class EmployeeController {
+public class EmployeeController extends BaseController {
 
     @Autowired
     private EmployeeService employeeService;
 
+
+    @CheckAuthorization(entity = Entity.EMPLOYMENT_DETAILS, permission = Permission.READ)
     @GetMapping("/basic")
     public ResponseEntity<List<EmployeeDetailsDTO>> getEmplpoyees() {
-        return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+        Long userId = getUserId();
+        return new ResponseEntity<>(employeeService.getEmployees(userId), HttpStatus.OK);
     }
 }

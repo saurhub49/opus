@@ -1,8 +1,5 @@
 package com.opus.dto.response;
 
-import com.opus.enums.Entity;
-import com.opus.enums.RoleTypeName;
-
 import java.util.Map;
 
 public class RoleTypeAuthorization {

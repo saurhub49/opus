@@ -1,8 +1,5 @@
 package com.opus.dto.response;
 
-
-import com.opus.enums.RoleTypeName;
-
 public class AuthResponse {
     private String token;
     private String username;

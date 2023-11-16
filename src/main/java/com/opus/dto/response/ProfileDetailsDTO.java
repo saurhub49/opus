@@ -1,7 +1,6 @@
 package com.opus.dto.response;
 
 import com.opus.entity.User;
-import com.opus.enums.RoleTypeName;
 
 public record ProfileDetailsDTO(Long id,
                                 String email,
@@ -12,7 +11,7 @@ public record ProfileDetailsDTO(Long id,
                                 String ClientName,
                                 Long departmentId,
                                 String departmentName,
-                                RoleTypeName roleTypeName) {
+                                String roleTypeName) {
 
     public static ProfileDetailsDTO fromEntity(User user) {
         return new ProfileDetailsDTO(user.getId(),
@@ -24,6 +23,6 @@ public record ProfileDetailsDTO(Long id,
                 user.getEmploymentDetail().getClient().getName(),
                 user.getEmploymentDetail().getDepartment().getId(),
                 user.getEmploymentDetail().getDepartment().getName(),
-                user.getEmploymentDetail().getRole().getRoleType().getName());
+                user.getEmploymentDetail().getRole().getRoleType().getName().toString());
     }
 }
