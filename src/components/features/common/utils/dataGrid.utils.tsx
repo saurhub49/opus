@@ -95,3 +95,52 @@ export const departmentsDataGridColumns: GridColDef[] = [
         flex: 1
     },
 ]
+
+export const employeesDataGridColumns: GridColDef[] = [
+    {
+        field: 'id',
+        headerName: 'ID',
+        type: 'number'
+    },
+    {
+        "field": "employeeId",
+        "headerName": "Employee ID",
+        "flex": 1
+    },
+    {
+        "field": "firstName",
+        "headerName": "First Name",
+        "flex": 1
+    },
+    {
+        "field": "lastName",
+        "headerName": "Last Name",
+        "flex": 1
+    },
+    {
+        "field": "workEmail",
+        "headerName": "Email",
+        "flex": 1
+    },
+    {
+        "field": "roleName",
+        "headerName": "Role Name",
+        "flex": 1
+    },
+    {
+        "field": "departmentName",
+        "headerName": "Department Name",
+        "flex": 1
+    },
+    {
+        "field": "hireDate",
+        "headerName": "Hire Date",
+        "flex": 1,
+        valueGetter: ({ value }) => value && moment(new Date(value)).format('LL'),
+    },
+    {
+        "field": "reportingManager",
+        "headerName": "Reporting Manager",
+        "flex": 1
+    }
+]

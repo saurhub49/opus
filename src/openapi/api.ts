@@ -132,6 +132,67 @@ export interface DepartmentRequestDTO {
 /**
  * 
  * @export
+ * @interface EmployeeDetailsDTO
+ */
+export interface EmployeeDetailsDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof EmployeeDetailsDTO
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'employeeId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'workEmail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'roleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'departmentName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'hireDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof EmployeeDetailsDTO
+     */
+    'reportingManager'?: string;
+}
+/**
+ * 
+ * @export
  * @interface JwtRequest
  */
 export interface JwtRequest {
@@ -1536,6 +1597,101 @@ export class DepartmentsApi extends BaseAPI {
      */
     public updateDepartment(id: number, departmentRequestDTO: DepartmentRequestDTO, options?: AxiosRequestConfig) {
         return DepartmentsApiFp(this.configuration).updateDepartment(id, departmentRequestDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * EmployeeApi - axios parameter creator
+ * @export
+ */
+export const EmployeeApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEmplpoyees: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/employees/basic`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * EmployeeApi - functional programming interface
+ * @export
+ */
+export const EmployeeApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = EmployeeApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEmplpoyees(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<EmployeeDetailsDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEmplpoyees(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * EmployeeApi - factory interface
+ * @export
+ */
+export const EmployeeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = EmployeeApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEmplpoyees(options?: any): AxiosPromise<Array<EmployeeDetailsDTO>> {
+            return localVarFp.getEmplpoyees(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * EmployeeApi - object-oriented interface
+ * @export
+ * @class EmployeeApi
+ * @extends {BaseAPI}
+ */
+export class EmployeeApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmployeeApi
+     */
+    public getEmplpoyees(options?: AxiosRequestConfig) {
+        return EmployeeApiFp(this.configuration).getEmplpoyees(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
