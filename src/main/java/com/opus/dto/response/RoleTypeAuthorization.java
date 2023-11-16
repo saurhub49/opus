@@ -7,9 +7,9 @@ import java.util.Map;
 
 public class RoleTypeAuthorization {
     private Long id;
-    private RoleTypeName name;
+    private String name;
     private String description;
-    private Map<Entity, RoleTypeEntityPermission> entityPermissions;
+    private Map<String, RoleTypeEntityPermission> entityPermissions;
 
     public RoleTypeAuthorization() {
     }
@@ -22,11 +22,11 @@ public class RoleTypeAuthorization {
         this.id = id;
     }
 
-    public RoleTypeName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(RoleTypeName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -38,11 +38,11 @@ public class RoleTypeAuthorization {
         this.description = description;
     }
 
-    public Map<Entity, RoleTypeEntityPermission> getEntityPermissions() {
+    public Map<String, RoleTypeEntityPermission> getEntityPermissions() {
         return entityPermissions;
     }
 
-    public void setEntityPermissions(Map<Entity, RoleTypeEntityPermission> entityPermissions) {
+    public void setEntityPermissions(Map<String, RoleTypeEntityPermission> entityPermissions) {
         this.entityPermissions = entityPermissions;
     }
 }

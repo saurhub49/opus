@@ -80,29 +80,31 @@ public class RoleTypeService {
 
         for (RoleType roleType : roleTypes) {
             RoleTypeAuthorization newRoleTypeAuthorization = new RoleTypeAuthorization();
-            Map<Entity, RoleTypeEntityPermission> permissions = new HashMap<>();
+            Map<String, RoleTypeEntityPermission> permissions = new HashMap<>();
 
             for (Entity entity : Entity.values()) {
-                permissions.put(entity, new RoleTypeEntityPermission(false, false, false, false));
+                permissions.put(entity.toString(), new RoleTypeEntityPermission(false, false, false, false));
             }
 
             for (RoleBasedAuthorizationConfiguration authorizationConfiguration : roleType.getAuthorizations()) {
-                RoleTypeEntityPermission currentPermission = permissions.get(authorizationConfiguration.getEntity());
+                RoleTypeEntityPermission currentPermission = permissions.get(authorizationConfiguration.getEntity().toString());
 
-                if (authorizationConfiguration.getPermission() == Permission.READ) {
-                    currentPermission.setRead(true);
-                } else if (authorizationConfiguration.getPermission() == Permission.CREATE) {
-                    currentPermission.setCreate(true);
-                } else if (authorizationConfiguration.getPermission() == Permission.UPDATE) {
-                    currentPermission.setUpdate(true);
-                } else if (authorizationConfiguration.getPermission() == Permission.DELETE) {
-                    currentPermission.setDelete(true);
+                if (currentPermission != null) {
+                    if (authorizationConfiguration.getPermission() == Permission.READ) {
+                        currentPermission.setRead(true);
+                    } else if (authorizationConfiguration.getPermission() == Permission.CREATE) {
+                        currentPermission.setCreate(true);
+                    } else if (authorizationConfiguration.getPermission() == Permission.UPDATE) {
+                        currentPermission.setUpdate(true);
+                    } else if (authorizationConfiguration.getPermission() == Permission.DELETE) {
+                        currentPermission.setDelete(true);
+                    }
                 }
 
             }
 
             newRoleTypeAuthorization.setId(roleType.getId());
-            newRoleTypeAuthorization.setName(roleType.getName());
+            newRoleTypeAuthorization.setName(roleType.getName().toString());
             newRoleTypeAuthorization.setDescription(roleType.getDescription());
             newRoleTypeAuthorization.setEntityPermissions(permissions);
 
@@ -113,20 +115,20 @@ public class RoleTypeService {
     }
 
     @Transactional
-    public void addOrRemoveRoleTypeAuthorizationConfiguration(RoleTypeAuthorizationConfigurationDTO roleTypeAuthorizationConfigurationDTO) throws NoSuchFieldException {
-        Boolean authorizationExists = authorizationConfigurationRepository.existsByRoleTypeEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission());
+    public void addOrRemoveRoleTypeAuthorizationConfiguration(RoleTypeAuthorizationConfigurationDTO roleTypeAuthorizationConfigurationDTO) {
+        Boolean authorizationExists = authorizationConfigurationRepository.existsByRoleTypeEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), Entity.valueOf(roleTypeAuthorizationConfigurationDTO.entity()), roleTypeAuthorizationConfigurationDTO.permission());
         if (roleTypeAuthorizationConfigurationDTO.value()) {
             if (authorizationExists) {
                 throw new OpusApplicationException("Required permission already exist!");
             }
 
-            authorizationConfigurationRepository.save(new RoleBasedAuthorizationConfiguration(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission()));
+            authorizationConfigurationRepository.save(new RoleBasedAuthorizationConfiguration(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), Entity.valueOf(roleTypeAuthorizationConfigurationDTO.entity()), roleTypeAuthorizationConfigurationDTO.permission()));
         } else {
             if (!authorizationExists) {
                 throw new OpusApplicationException("Required permission does not exist!");
             }
 
-            authorizationConfigurationRepository.deleteByRoleTypeAndEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), roleTypeAuthorizationConfigurationDTO.entity(), roleTypeAuthorizationConfigurationDTO.permission());
+            authorizationConfigurationRepository.deleteByRoleTypeAndEntityAndPermission(new RoleType(roleTypeAuthorizationConfigurationDTO.roleTypeId()), Entity.valueOf(roleTypeAuthorizationConfigurationDTO.entity()), roleTypeAuthorizationConfigurationDTO.permission());
         }
     }
 }

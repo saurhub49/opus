@@ -3,6 +3,7 @@ package com.opus.controller;
 import com.opus.dto.request.RoleRequestDTO;
 import com.opus.dto.response.RoleDTO;
 import com.opus.service.RoleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
-public class RoleController {
+@Tag(name = "Role", description = "Endpoint for roles api")
+public class RoleController extends BaseController {
 
     private final RoleService roleService;
 
@@ -38,7 +40,8 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RoleDTO> createRole(@RequestParam Long userId, @RequestBody RoleRequestDTO roleRequestDTO) {
+    public ResponseEntity<RoleDTO> createRole(@RequestBody RoleRequestDTO roleRequestDTO) {
+        Long userId = getUserId();
         RoleDTO createdRole = roleService.createRole(userId, roleRequestDTO);
         return new ResponseEntity<>(createdRole, HttpStatus.CREATED);
     }
