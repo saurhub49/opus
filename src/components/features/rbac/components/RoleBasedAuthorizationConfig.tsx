@@ -1,10 +1,10 @@
 import { Box, Checkbox, Chip, Divider, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, Skeleton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useAddOrRemoveRoleTypeAuthorizationsMutation, useGetAllRoleTypeAuthorizationsQuery } from "../apis/rbac.api";
 import React from "react";
-import { RoleTypeAuthorization, RoleTypeAuthorizationConfigurationDTO, RoleTypeAuthorizationConfigurationDTOEntityEnum, RoleTypeAuthorizationConfigurationDTOPermissionEnum, RoleTypeEntityPermission } from "../../../../openapi";
+import { RoleTypeAuthorization, RoleTypeAuthorizationConfigurationDTO, RoleTypeAuthorizationConfigurationDTOPermissionEnum, RoleTypeEntityPermission } from "../../../../openapi";
 import GenericPageTemplate from "../../common/components/GenericPageTemplate";
 import { convertUppercaseStringsWithUnderscoresToReadableString } from "../../common/utils/common.utils";
-import { convertStringToRoleTypeAuthorizationConfigurationDTOEntityEnum, convertStringToRoleTypeAuthorizationConfigurationDTOPermissionEnum } from "../utils/rbac.utils";
+import { convertStringToRoleTypeAuthorizationConfigurationDTOPermissionEnum } from "../utils/rbac.utils";
 
 
 
@@ -25,11 +25,11 @@ const RoleBasedAuthorizationConfig: React.FC = () => {
 
     const onClickEntityPermissionChangeHandler = React.useCallback(
         (
-            entity: RoleTypeAuthorizationConfigurationDTOEntityEnum | null,
+            entity: string,
             permissionType: RoleTypeAuthorizationConfigurationDTOPermissionEnum | null,
             checked: boolean
         ) => {
-            if (!!selectedRoleType && !!selectedRoleType.id && !!entity && !!permissionType) {
+            if (!!selectedRoleType && !!selectedRoleType.id && !!permissionType) {
                 const request: RoleTypeAuthorizationConfigurationDTO = {
                     entity: entity,
                     permission: permissionType,
@@ -171,7 +171,7 @@ interface RoleBasedAuthorizationConfigEntityRowProps {
     permissions: RoleTypeEntityPermission;
     onClickEntityPermissionChangeHandler:
     (
-        entity: RoleTypeAuthorizationConfigurationDTOEntityEnum | null,
+        entity: string,
         permissionType: RoleTypeAuthorizationConfigurationDTOPermissionEnum | null,
         checked: boolean
     ) => void;
@@ -182,7 +182,7 @@ const RoleBasedAuthorizationConfigEntityRow: React.FC<RoleBasedAuthorizationConf
 
     const onClickCheckboxHandler = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         onClickEntityPermissionChangeHandler(
-            convertStringToRoleTypeAuthorizationConfigurationDTOEntityEnum(entity),
+            entity,
             convertStringToRoleTypeAuthorizationConfigurationDTOPermissionEnum(event.target.id),
             event.target.checked);
     }, [entity, onClickEntityPermissionChangeHandler]);

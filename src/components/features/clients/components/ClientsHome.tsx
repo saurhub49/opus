@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import GenericDataGrid from "../../common/components/GenericDataGrid";
 import GenericPageTemplate from "../../common/components/GenericPageTemplate";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import GenericModal from "../../common/components/GenericModal";
 import { ClientDTO } from "../../../../openapi";
 import { clientsDataGridColumns } from "../../common/utils/dataGrid.utils";
@@ -11,6 +11,7 @@ import GenericButton from "../../common/components/GenericButton";
 import { useCreateClientMutation, useGetClientsQuery, useUpdateClientMutation } from "../apis/clients.api";
 import { GridRowParams } from "@mui/x-data-grid";
 import GenericCheckbox from "../../common/components/GenericCheckbox";
+import useGenericModal from "../../common/hooks/useGenericModal.hook";
 
 const initialState: ClientDTO = {
     id: 0,
@@ -22,24 +23,10 @@ const initialState: ClientDTO = {
 }
 
 const ClientsHome: React.FC = () => {
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [clientState, setClientState] = useState<ClientDTO>(initialState);
+    const { modalOpen, modalState: clientState, setModalState: setClientState, openModalHandler, closeModalHandler, onChangeHandler } = useGenericModal(initialState);
     const { data: clients, isLoading: loading, refetch: refetchClients } = useGetClientsQuery();
     const [createClient, createClientResult] = useCreateClientMutation();
     const [updateClient, updateClientResult] = useUpdateClientMutation();
-
-    const openModalHandler = useCallback(() => {
-        setModalOpen(true);
-    }, []);
-
-    const closeModalHandler = useCallback(() => {
-        setModalOpen(false);
-        setClientState(initialState);
-    }, []);
-
-    const onChangeHandler = useCallback(<K extends keyof ClientDTO>(field: K, value: ClientDTO[K]) => {
-        setClientState(prevState => ({ ...prevState, [field]: value }))
-    }, []);
 
     const onCreateClientHandler = useCallback(() => {
         createClient(clientState);
@@ -51,8 +38,8 @@ const ClientsHome: React.FC = () => {
 
     const onRowClickHandler = useCallback((params: GridRowParams<ClientDTO>) => {
         setClientState(params.row);
-        setModalOpen(true);
-    }, []);
+        openModalHandler();
+    }, [openModalHandler, setClientState]);
 
     useEffect(() => {
         if (createClientResult.isSuccess) {
@@ -71,13 +58,21 @@ const ClientsHome: React.FC = () => {
     }, [closeModalHandler, updateClientResult, updateClientResult.isSuccess, refetchClients]);
 
     return (
-        <GenericPageTemplate loading={loading} title="Clients" subtitle="A list of all clients is displayed" pageActions={[<Button variant="contained" onClick={openModalHandler}>Add New Client</Button>]}>
+        <GenericPageTemplate
+            loading={loading}
+            title="Clients"
+            subtitle="A list of all clients is displayed"
+            pageActions={[<Button variant="contained"
+                onClick={openModalHandler}
+            >
+                Add New Client
+            </Button>]}>
             <GenericDataGrid columns={clientsDataGridColumns} rows={clients ?? []} onRowClick={onRowClickHandler} />
             <GenericModal open={modalOpen} handleClose={closeModalHandler}>
                 <>
                     <React.Fragment>
                         <Typography variant="h6" gutterBottom>
-                            Enter client details
+                            Enter Client details
                         </Typography>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>

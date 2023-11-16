@@ -7,6 +7,8 @@ import snackbarSlice from "../snackbar/reducers/snackbar.slice";
 import employeeSlice from "../../components/features/employees/reducers/employee.slice";
 import { clientApi } from "../../components/features/clients/apis/clients.api";
 import { rbacApi } from '../../components/features/rbac/apis/rbac.api';
+import { rolesApi } from '../../components/features/roles/apis/roles.api';
+import { departmentApi } from '../../components/features/departments/apis/departments.api';
 
 const rootReducer = combineReducers({
     snackbar: snackbarSlice,
@@ -14,7 +16,9 @@ const rootReducer = combineReducers({
     sidebar: sidebarSlice,
     employees: employeeSlice,
     [clientApi.reducerPath]: clientApi.reducer,
-    [rbacApi.reducerPath]: rbacApi.reducer
+    [rbacApi.reducerPath]: rbacApi.reducer,
+    [rolesApi.reducerPath]: rolesApi.reducer,
+    [departmentApi.reducerPath]: departmentApi.reducer
 });
 
 const store = configureStore({
@@ -25,6 +29,8 @@ const store = configureStore({
         })
             .concat(clientApi.middleware)
             .concat(rbacApi.middleware)
+            .concat(rolesApi.middleware)
+            .concat(departmentApi.middleware)
             .concat(errorMiddleware),
 });
 
