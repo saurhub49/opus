@@ -1,7 +1,10 @@
 package com.opus.controller;
 
+import com.opus.annotations.CheckAuthorization;
 import com.opus.dto.request.DepartmentRequestDTO;
 import com.opus.dto.response.DepartmentDTO;
+import com.opus.enums.Entity;
+import com.opus.enums.Permission;
 import com.opus.service.DepartmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +26,16 @@ public class DepartmentController extends BaseController {
         this.departmentService = departmentService;
     }
 
-    @PostMapping
-    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentRequestDTO departmentDto) {
-        Long userId = getUserId();
-        DepartmentDTO createdDepartment = departmentService.createDepartment(userId, departmentDto);
-        return new ResponseEntity<>(createdDepartment, HttpStatus.CREATED);
-    }
-
+    @CheckAuthorization(entity = Entity.DEPARTMENT, permission = Permission.READ)
     @GetMapping
     public ResponseEntity<List<DepartmentDTO>> getAllDepartments() {
-        List<DepartmentDTO> Departments = departmentService.getALlDepartments();
+        Long userId = getUserId();
+
+        List<DepartmentDTO> Departments = departmentService.getALlDepartments(userId);
         return new ResponseEntity<>(Departments, HttpStatus.OK);
     }
 
+    @CheckAuthorization(entity = Entity.DEPARTMENT, permission = Permission.READ, belongsToClient = true)
     @GetMapping("/{id}")
     public ResponseEntity<DepartmentDTO> getDepartmentById(@PathVariable Long id) {
         DepartmentDTO Department = departmentService.getDepartment(id);
@@ -46,6 +46,15 @@ public class DepartmentController extends BaseController {
         }
     }
 
+    @CheckAuthorization(entity = Entity.DEPARTMENT, permission = Permission.CREATE)
+    @PostMapping
+    public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentRequestDTO departmentDto) {
+        Long userId = getUserId();
+        DepartmentDTO createdDepartment = departmentService.createDepartment(userId, departmentDto);
+        return new ResponseEntity<>(createdDepartment, HttpStatus.CREATED);
+    }
+
+    @CheckAuthorization(entity = Entity.DEPARTMENT, permission = Permission.READ, belongsToClient = true)
     @PutMapping("/{id}")
     public ResponseEntity<DepartmentDTO> updateDepartment(@PathVariable Long id, @RequestBody DepartmentRequestDTO departmentDto) {
         DepartmentDTO updatedDepartment = departmentService.updateDepartment(id, departmentDto);
@@ -56,6 +65,7 @@ public class DepartmentController extends BaseController {
         }
     }
 
+    @CheckAuthorization(entity = Entity.DEPARTMENT, permission = Permission.READ, belongsToClient = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDepartment(@PathVariable Long id) {
         departmentService.deleteDepartment(id);

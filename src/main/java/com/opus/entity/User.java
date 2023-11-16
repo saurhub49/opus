@@ -54,6 +54,10 @@ public class User implements UserDetails {
 
     private String profilePicUrl;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
     @OneToOne(mappedBy = "user")
     private EmploymentDetail employmentDetail;
 
@@ -212,31 +216,19 @@ public class User implements UserDetails {
         this.profilePicUrl = profilePicUrl;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public EmploymentDetail getEmploymentDetail() {
         return employmentDetail;
     }
 
     public void setEmploymentDetail(EmploymentDetail employmentDetail) {
         this.employmentDetail = employmentDetail;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender='" + gender + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                ", profilePicUrl='" + profilePicUrl + '\'' +
-                ", employmentDetail=" + employmentDetail +
-                '}';
     }
 }

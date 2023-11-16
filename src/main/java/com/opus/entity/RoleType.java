@@ -1,6 +1,5 @@
 package com.opus.entity;
 
-import com.opus.enums.RoleTypeName;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -14,8 +13,7 @@ public class RoleType {
     private Long id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private RoleTypeName name;
+    private String name;
 
     private String description;
 
@@ -30,7 +28,7 @@ public class RoleType {
     }
 
 
-    public RoleType(Long id, RoleTypeName name, String description) {
+    public RoleType(Long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -44,11 +42,11 @@ public class RoleType {
         this.id = id;
     }
 
-    public RoleTypeName getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(RoleTypeName name) {
+    public void setName(String name) {
         this.name = name;
     }
 

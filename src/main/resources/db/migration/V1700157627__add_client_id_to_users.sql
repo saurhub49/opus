@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD COLUMN client_id BIGINT NOT NULL REFERENCES client(id);

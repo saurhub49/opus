@@ -18,8 +18,8 @@ public class EmployeeService {
         this.userRepository = userRepository;
     }
 
-    public List<EmployeeDetailsDTO> getEmployees() {
-        List<User> users = userRepository.findAll();
+    public List<EmployeeDetailsDTO> getEmployees(Long userId) {
+        List<User> users = userRepository.findAll(userRepository.findClientIdByUserId(userId));
         List<EmployeeDetailsDTO> employees = new ArrayList<>();
 
         for (User user : users) {
