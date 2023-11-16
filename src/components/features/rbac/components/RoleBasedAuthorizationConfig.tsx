@@ -78,7 +78,7 @@ const RoleBasedAuthorizationConfig: React.FC = () => {
                         >
                             {
                                 data && data.map((roleType) => (
-                                    <MenuItem key={roleType.id} value={roleType.id}>{convertUppercaseStringsWithUnderscoresToReadableString(roleType.name ?? '')}</MenuItem>
+                                    <MenuItem key={roleType.id} value={roleType.id}>{roleType.name}</MenuItem>
                                 ))
                             }
                         </Select>

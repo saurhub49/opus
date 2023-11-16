@@ -274,18 +274,8 @@ export interface ProfileDetailsDTO {
      * @type {string}
      * @memberof ProfileDetailsDTO
      */
-    'roleTypeName'?: ProfileDetailsDTORoleTypeNameEnum;
+    'roleTypeName'?: string;
 }
-
-export const ProfileDetailsDTORoleTypeNameEnum = {
-    SuperAdmin: 'SUPER_ADMIN',
-    Admin: 'ADMIN',
-    Manager: 'MANAGER',
-    Employee: 'EMPLOYEE'
-} as const;
-
-export type ProfileDetailsDTORoleTypeNameEnum = typeof ProfileDetailsDTORoleTypeNameEnum[keyof typeof ProfileDetailsDTORoleTypeNameEnum];
-
 /**
  * 
  * @export
@@ -321,18 +311,8 @@ export interface RoleDTO {
      * @type {string}
      * @memberof RoleDTO
      */
-    'roleTypeName'?: RoleDTORoleTypeNameEnum;
+    'roleTypeName'?: string;
 }
-
-export const RoleDTORoleTypeNameEnum = {
-    SuperAdmin: 'SUPER_ADMIN',
-    Admin: 'ADMIN',
-    Manager: 'MANAGER',
-    Employee: 'EMPLOYEE'
-} as const;
-
-export type RoleDTORoleTypeNameEnum = typeof RoleDTORoleTypeNameEnum[keyof typeof RoleDTORoleTypeNameEnum];
-
 /**
  * 
  * @export
@@ -497,7 +477,7 @@ export interface RoleTypeRequestDTO {
      * @type {string}
      * @memberof RoleTypeRequestDTO
      */
-    'name'?: RoleTypeRequestDTONameEnum;
+    'name'?: string;
     /**
      * 
      * @type {string}
@@ -505,16 +485,6 @@ export interface RoleTypeRequestDTO {
      */
     'description'?: string;
 }
-
-export const RoleTypeRequestDTONameEnum = {
-    SuperAdmin: 'SUPER_ADMIN',
-    Admin: 'ADMIN',
-    Manager: 'MANAGER',
-    Employee: 'EMPLOYEE'
-} as const;
-
-export type RoleTypeRequestDTONameEnum = typeof RoleTypeRequestDTONameEnum[keyof typeof RoleTypeRequestDTONameEnum];
-
 /**
  * 
  * @export
@@ -1777,7 +1747,7 @@ export const RoleApiAxiosParamCreator = function (configuration?: Configuration)
          * @throws {RequiredError}
          */
         getAllRoles: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/roles/all`;
+            const localVarPath = `/roles/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

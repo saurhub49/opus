@@ -11,7 +11,6 @@ import GenericTextField from "../../common/components/GenericTextField";
 import CircularLoading from "../../common/components/CircularLoading";
 import GenericButton from "../../common/components/GenericButton";
 import { GridRowParams } from "@mui/x-data-grid";
-import { convertUppercaseStringsWithUnderscoresToReadableString } from "../../common/utils/common.utils";
 
 const initialRoleState: RoleDTO = {
     id: 0,
@@ -127,7 +126,7 @@ const RolesHome: React.FC = () => {
                                     >
                                         {
                                             roleTypes.map((roleType) => (
-                                                <MenuItem key={roleType.id} value={roleType.id}>{convertUppercaseStringsWithUnderscoresToReadableString(roleType.name ?? '')}</MenuItem>
+                                                <MenuItem key={roleType.id} value={roleType.id}>{roleType.name}</MenuItem>
                                             ))
                                         }
                                     </Select>
