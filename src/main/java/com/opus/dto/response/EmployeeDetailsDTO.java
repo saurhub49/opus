@@ -5,7 +5,8 @@ import com.opus.entity.User;
 
 import java.util.Date;
 
-public record EmployeeDetailsDTO(String employeeId,
+public record EmployeeDetailsDTO(Long id,
+                                 String employeeId,
                                  String firstName,
                                  String lastName,
                                  String workEmail,
@@ -15,8 +16,10 @@ public record EmployeeDetailsDTO(String employeeId,
                                  Date hireDate,
                                  String reportingManager) {
 
-    public EmployeeDetailsDTO fromEntity(User user) {
-        return new EmployeeDetailsDTO(user.getEmploymentDetail().getEmployeeId(),
+    public static EmployeeDetailsDTO fromEntity(User user) {
+        return new EmployeeDetailsDTO(
+                user.getId(),
+                user.getEmploymentDetail().getEmployeeId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmploymentDetail().getWorkEmail(),
