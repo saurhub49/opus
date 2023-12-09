@@ -1,10 +1,13 @@
 import React from "react";
 import GenericInputFieldProps from "../interfaces/GenericInputFieldProps";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, CheckboxProps, FormControlLabel } from "@mui/material";
 
 type GenericCheckboxProps<T, K extends keyof T> = {
+    label: string;
     value: boolean;
-} & Omit<GenericInputFieldProps<T, K>, 'value'>
+}
+    & Omit<GenericInputFieldProps<T, K>, 'value'>
+    & Omit<CheckboxProps, 'variant' | 'value' | 'field' | 'onChange'>;
 
 const GenericCheckbox = <T, K extends keyof T>(props: GenericCheckboxProps<T, K>) => {
     const { label, required, value, field, onChange, sx } = props;

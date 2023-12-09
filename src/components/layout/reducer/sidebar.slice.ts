@@ -1,12 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import SideBarState from "../interfaces/sidebarState.interface"
-import { getSideBarItems } from "../utils/sidebar.utils";
-
 
 const sideBarInitialState: SideBarState = {
     isOpen: true,
     isLargeDevice: true,
-    items: getSideBarItems(),
 }
 
 const sidebarSlice = createSlice({

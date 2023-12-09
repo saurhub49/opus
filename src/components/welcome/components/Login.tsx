@@ -1,146 +1,100 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAppDispatch } from '../../../global/redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../global/redux/hooks';
 import { loginAction } from '../actions/authAsyncThunkActions.action';
+import WelcomeFormContainer from './WelcomeFormContainer';
+import { JwtRequest } from '../../../openapi';
+import useGenericState from '../../features/common/hooks/useGenericState.hook';
+import GenericTextField from '../../features/common/components/GenericTextField';
+import GenericButton from '../../features/common/components/GenericButton';
+import { useNavigate } from 'react-router-dom';
 
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+const initialLoginState: JwtRequest = {
+  email: '',
+  password: '',
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 const Login: React.FC = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const { state, onChangeHandler } = useGenericState(initialLoginState);
   const dispatch = useAppDispatch();
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    dispatch(loginAction({
-      email: email,
-      password: password
-    }))
-  };
+  const { loading } = useAppSelector(state => state.auth);
+  const navigate = useNavigate();
 
-  const handleEmailUpdate = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmitHandler = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setEmail(event.target.value);
-  }, []);
+    dispatch(loginAction(state))
+      .then(() => {
+        console.log('login success');
+        window.location.reload();
+      });
+  }, [dispatch, state]);
 
-  const handlePasswordUpdate = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
-    setPassword(event.target.value);
-  }, []);
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!!token && token !== '') {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(' + process.env.PUBLIC_URL + '/opus-login.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+    <WelcomeFormContainer>
+      <Box
+        sx={{
+          my: 8,
+          mx: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+        <Box component="form" noValidate sx={{ mt: 1 }}>
+          <GenericTextField<JwtRequest, 'email'>
+            id='email'
+            field='email'
+            label='Email'
+            onChange={onChangeHandler}
+            required
+            value={state.email}
+            variant='outlined'
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              my: 1,
             }}
+          />
+          <GenericTextField<JwtRequest, 'password'>
+            id='password'
+            type='password'
+            field='password'
+            label='Password'
+            onChange={onChangeHandler}
+            required
+            value={state.password}
+            variant='outlined'
+            sx={{
+              my: 1,
+            }}
+          />
+          <GenericButton
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{ mt: 3, mb: 2 }}
+            onClick={onSubmitHandler}
+            loading={loading}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={handleEmailUpdate}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handlePasswordUpdate}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleSubmit}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+            Sign In
+          </GenericButton>
+        </Box>
+      </Box>
+    </WelcomeFormContainer>
   );
 }
 

@@ -8,11 +8,13 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../global/redux/hooks';
 import { toggleSidebar } from '../reducer/sidebar.slice';
-import SidebarItem from '../interfaces/sidebarItem.interface';
 import { Box, Drawer, Grid, ListItem, PaperProps, Toolbar } from '@mui/material';
 import { drawerWidth } from '../constants/layoutConstants.constants';
 import OpusLogo from '../../../global/logos/OpusLogo';
 import { blueGrey } from '@mui/material/colors';
+import Route from '../../../global/interfaces/route.interface';
+import { getSidebarElements } from '../../../global/utils/routes.utils';
+import RoleTypes from '../../../global/enums/roleTypes.enum';
 
 const drawerPaperProps: Partial<PaperProps<React.ElementType<any>>> = {
     sx: {
@@ -24,9 +26,11 @@ const drawerPaperProps: Partial<PaperProps<React.ElementType<any>>> = {
 
 const Sidebar: React.FC = () => {
     const theme = useTheme();
-
-    const { isOpen, isLargeDevice, items } = useAppSelector(state => state.sidebar);
+    const profile = useAppSelector(state => state.profile.profile);
+    const { isOpen, isLargeDevice } = useAppSelector(state => state.sidebar);
     const dispatch = useAppDispatch();
+
+    const items = React.useMemo(() => getSidebarElements(profile?.roleTypeName as RoleTypes), [profile]);
 
     const handleDrawerToggle = React.useCallback(() => {
         dispatch(toggleSidebar(!isOpen));
@@ -46,7 +50,7 @@ const Sidebar: React.FC = () => {
             </Toolbar>
             <Box overflow='auto'>
                 <List>
-                    {items.map((item: SidebarItem) => (
+                    {items.map((item: Route) => (
                         <ListItem key={item.id} disablePadding sx={{
                             display: 'block',
                             ':hover': {

@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { AuthResponse } from "../../../openapi";
 import { loginAction } from "../actions/authAsyncThunkActions.action";
 
+interface AuthResponseState {
+    loading: boolean;
+}
 
-const initialState: AuthResponse = {
-    token: "",
-    username: ""
-};
+const initialState: AuthResponseState = {
+    loading: false,
+}
 
 const authSlice = createSlice({
     name: 'auth',
@@ -15,14 +16,17 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAction.pending, (state) => {
-                state.token = '';
+                state.loading = true;
+                return state;
             })
             .addCase(loginAction.fulfilled, (state, action) => {
-                state = action.payload;
-                localStorage.setItem('token', state.token ?? '');
+                localStorage.setItem('token', action.payload.token ?? '');
+                state.loading = false;
+                return state;
             })
             .addCase(loginAction.rejected, (state, action) => {
-                state.token = '';
+                state.loading = false;
+                return state;
             });
     },
 });

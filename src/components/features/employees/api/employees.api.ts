@@ -11,7 +11,7 @@ export const employeeApi = createApi({
     endpoints: builder => ({
         getAllEmployees: builder.query<EmployeeDetailsDTO[], void>({
             queryFn: async () => {
-                const response = await employees.getEmplpoyees();
+                const response = await employees.getEmployees();
                 return response;
             }
         })
