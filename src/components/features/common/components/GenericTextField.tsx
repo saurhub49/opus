@@ -1,9 +1,12 @@
 import React from "react";
 import GenericInputFieldProps from "../interfaces/GenericInputFieldProps";
-import { TextField } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 
-const GenericTextField = <T, K extends keyof T>(props: GenericInputFieldProps<T, K>) => {
-    const { label, required, value, field, onChange, sx } = props;
+type GenericTextFieldProps<T, K extends keyof T> = GenericInputFieldProps<T, K>
+    & Omit<TextFieldProps, 'variant' | 'value' | 'field' | 'onChange'>
+
+const GenericTextField = <T, K extends keyof T>(props: GenericTextFieldProps<T, K>) => {
+    const { field, onChange, variant = 'standard' } = props;
 
     const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const updatedValue = event.target.value as unknown as T[K];
@@ -12,12 +15,9 @@ const GenericTextField = <T, K extends keyof T>(props: GenericInputFieldProps<T,
 
     return (
         <TextField
-            variant="standard"
-            required={required}
-            value={value}
-            label={label}
+            {...props}
+            variant={variant}
             onChange={handleChange}
-            sx={sx}
             fullWidth
         />
     );
