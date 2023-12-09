@@ -17,6 +17,8 @@ public record EmployeeDetailsDTO(Long id,
                                  String reportingManager) {
 
     public static EmployeeDetailsDTO fromEntity(User user) {
+        String reportingManager = user.getEmploymentDetail().getReportingManager() != null ? (user.getEmploymentDetail().getReportingManager().getFirstName() + " " + user.getEmploymentDetail().getReportingManager().getLastName()) : "";
+
         return new EmployeeDetailsDTO(
                 user.getId(),
                 user.getEmploymentDetail().getEmployeeId(),
@@ -26,6 +28,6 @@ public record EmployeeDetailsDTO(Long id,
                 user.getEmploymentDetail().getRole().getRoleName(),
                 user.getEmploymentDetail().getDepartment().getName(),
                 user.getEmploymentDetail().getHireDate(),
-                user.getEmploymentDetail().getReportingManager().getFirstName() + " " + user.getEmploymentDetail().getReportingManager().getLastName());
+                reportingManager);
     }
 }

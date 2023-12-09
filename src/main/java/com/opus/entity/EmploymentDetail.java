@@ -26,11 +26,11 @@ public class EmploymentDetail {
     private Client client;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", nullable = true)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department_id", nullable = true)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     @Temporal(TemporalType.DATE)

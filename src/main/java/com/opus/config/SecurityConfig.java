@@ -90,7 +90,8 @@ public class SecurityConfig {
                 .requestMatchers("/auth/**", "/v3/api-docs").permitAll()
                 .anyRequest()
                 .authenticated()
-                .and()//.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
+                .and()
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

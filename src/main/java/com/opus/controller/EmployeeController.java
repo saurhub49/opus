@@ -25,8 +25,8 @@ public class EmployeeController extends BaseController {
 
 
     @CheckAuthorization(entity = Entity.EMPLOYMENT_DETAILS, permission = Permission.READ)
-    @GetMapping("/basic")
-    public ResponseEntity<List<EmployeeDetailsDTO>> getEmplpoyees() {
+    @GetMapping
+    public ResponseEntity<List<EmployeeDetailsDTO>> getEmployees() {
         Long userId = getUserId();
         return new ResponseEntity<>(employeeService.getEmployees(userId), HttpStatus.OK);
     }

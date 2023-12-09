@@ -1,88 +1,106 @@
 package com.opus.service;
 
+import com.opus.dto.request.ConfirmUserDTO;
+import com.opus.dto.request.CreateUserDTO;
 import com.opus.dto.response.ProfileDetailsDTO;
-import com.opus.dto.response.UserDetailsDTO;
-import com.opus.dto.response.UserDTO;
-import com.opus.dto.request.UserUpdateDTO;
+import com.opus.entity.Client;
+import com.opus.entity.EmploymentDetail;
 import com.opus.entity.User;
-import com.opus.repository.UserRepository;
+import com.opus.entity.UserToken;
+import com.opus.exceptions.OpusApplicationException;
+import com.opus.repository.*;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
+    private final DepartmentRepository departmentRepository;
+
+    private final EmployementDetailRepository employementDetailRepository;
+
+    private final UserTokenRepository userTokenRepository;
+
+    private final EmailService emailService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-    public List<UserDetailsDTO> getAllUsers() {
-        List<User> users = userRepository.findAll();
-
-        return users.stream().map(UserDetailsDTO::fromEntity).collect(Collectors.toList());
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, DepartmentRepository departmentRepository, EmployementDetailRepository employementDetailRepository, UserTokenRepository userTokenRepository, EmailService emailService) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.departmentRepository = departmentRepository;
+        this.employementDetailRepository = employementDetailRepository;
+        this.userTokenRepository = userTokenRepository;
+        this.emailService = emailService;
     }
 
-    public UserDetailsDTO getUser(Long userId) {
-        User user = getUserById(userId);
+    public void registerUser(Long currentUserId, CreateUserDTO createUserDTO) throws MessagingException {
+        Optional<User> userOptional = userRepository.findByEmail(createUserDTO.email());
+        if (userOptional.isPresent()) {
+            throw new OpusApplicationException("Email already exists!!!");
+        }
 
-        return UserDetailsDTO.fromEntity(user);
+        Client client = userRepository.findClientByUserId(currentUserId);
+
+        User newUser = new User();
+        newUser.setEmail(createUserDTO.email());
+        newUser.setFirstName(createUserDTO.firstName());
+        newUser.setLastName(createUserDTO.lastName());
+        newUser.setGender(createUserDTO.gender());
+        newUser.setClient(client);
+
+        newUser = userRepository.save(newUser);
+
+        EmploymentDetail employmentDetail = new EmploymentDetail();
+        employmentDetail.setClient(client);
+        employmentDetail.setUser(newUser);
+        employmentDetail.setDepartment(departmentRepository.findById(createUserDTO.departmentId()).get());
+        employmentDetail.setRole(roleRepository.findById(createUserDTO.roleId()).get());
+
+        employementDetailRepository.save(employmentDetail);
+
+        UserToken userToken = new UserToken();
+        userToken.setUser(newUser);
+        userToken.setToken(UUID.randomUUID());
+
+        userToken = userTokenRepository.save(userToken);
+
+        emailService.sendUserConfirmationEmail(newUser.getEmail(), userToken.getToken().toString());
     }
 
-    public UserDetailsDTO createUser(UserDTO userDto) {
-        User user = new User();
-        user.setEmail(userDto.email());
-        user.setPassword(passwordEncoder.encode(userDto.password()));
-        user.setFirstName(userDto.firstName());
-        user.setMiddleName(userDto.middleName());
-        user.setLastName(userDto.lastName());
-        user.setDateOfBirth(userDto.dateOfBirth());
-        user.setGender(userDto.gender());
+    public void confirmUser(ConfirmUserDTO confirmUserDTO) {
+        if (!Objects.equals(confirmUserDTO.password(), confirmUserDTO.confirmPassword())) {
+            throw new OpusApplicationException("Password mismatch!");
+        }
 
-        user = userRepository.save(user);
-        return UserDetailsDTO.fromEntity(user);
-    }
+        UserToken userToken = userTokenRepository.findByToken(confirmUserDTO.token());
+        if (userToken == null) {
+            throw new OpusApplicationException("Invalid token!");
+        }
 
-    public UserDetailsDTO updateUser(Long userId, UserUpdateDTO userDto) {
-        User userToBeUpdated = getUserById(userId);
+        User user = userToken.getUser();
+        user.setConfirmed(true);
+        user.setPassword(passwordEncoder.encode(confirmUserDTO.password()));
 
-        userToBeUpdated.setEmail(userDto.getEmail());
-        userToBeUpdated.setFirstName(userDto.getFirstName());
-        userToBeUpdated.setMiddleName(userDto.getMiddleName());
-        userToBeUpdated.setLastName(userDto.getLastName());
-        userToBeUpdated.setPhoneNumber(userDto.getPhoneNumber());
-        userToBeUpdated.setAddress(userDto.getAddress());
-        userToBeUpdated.setDateOfBirth(userDto.getDateOfBirth());
-        userToBeUpdated.setGender(userDto.getGender());
-        userToBeUpdated.setNationality(userDto.getNationality());
-        userToBeUpdated.setMaritalStatus(userDto.getMaritalStatus());
-
-        User updatedUser = userRepository.save(userToBeUpdated);
-
-        return UserDetailsDTO.fromEntity(updatedUser);
-    }
-
-    public Long deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-
-        return userId;
+        userRepository.save(user);
+        userTokenRepository.delete(userToken);
     }
 
     public ProfileDetailsDTO getUserProfile(Long userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
 
         return ProfileDetailsDTO.fromEntity(user);
-    }
-
-    private User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,7 +19,7 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true, length = 255)
     private String email;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String password;
 
     @Column(nullable = false, name = "first_name")
@@ -61,10 +59,15 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user")
     private EmploymentDetail employmentDetail;
 
+    @OneToOne(mappedBy = "user")
+    private UserToken userToken;
+
+    private Boolean confirmed = false;
+
     public User() {
     }
 
-    public User(Long id, String email, String password, String firstName, String middleName, String lastName, String phoneNumber, String address, Date dateOfBirth, String gender, String nationality, String maritalStatus, String profilePicUrl, EmploymentDetail employmentDetail) {
+    public User(Long id, String email, String password, String firstName, String middleName, String lastName, String phoneNumber, String address, Date dateOfBirth, String gender, String nationality, String maritalStatus, String profilePicUrl, Client client, EmploymentDetail employmentDetail, UserToken userToken, Boolean confirmed) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -78,7 +81,10 @@ public class User implements UserDetails {
         this.nationality = nationality;
         this.maritalStatus = maritalStatus;
         this.profilePicUrl = profilePicUrl;
+        this.client = client;
         this.employmentDetail = employmentDetail;
+        this.userToken = userToken;
+        this.confirmed = confirmed;
     }
 
     @Override
@@ -230,5 +236,21 @@ public class User implements UserDetails {
 
     public void setEmploymentDetail(EmploymentDetail employmentDetail) {
         this.employmentDetail = employmentDetail;
+    }
+
+    public UserToken getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(UserToken userToken) {
+        this.userToken = userToken;
+    }
+
+    public Boolean getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(Boolean confirmed) {
+        this.confirmed = confirmed;
     }
 }
