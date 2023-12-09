@@ -23,6 +23,6 @@ public record ProfileDetailsDTO(Long id,
                 user.getEmploymentDetail().getClient().getName(),
                 user.getEmploymentDetail().getDepartment().getId(),
                 user.getEmploymentDetail().getDepartment().getName(),
-                user.getEmploymentDetail().getRole().getRoleType().getName().toString());
+                user.getEmploymentDetail().getRole().getRoleType().getName());
     }
 }

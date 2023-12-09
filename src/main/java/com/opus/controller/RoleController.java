@@ -27,7 +27,7 @@ public class RoleController extends BaseController {
     }
 
     @CheckAuthorization(entity = Entity.ROLE, permission = Permission.READ)
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<RoleDTO>> getAllRoles() {
         Long userId = getUserId();
         List<RoleDTO> roles = roleService.getAllRoles(userId);
@@ -46,7 +46,7 @@ public class RoleController extends BaseController {
     }
 
     @CheckAuthorization(entity = Entity.ROLE, permission = Permission.CREATE)
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<RoleDTO> createRole(@RequestBody RoleRequestDTO roleRequestDTO) {
         Long userId = getUserId();
         RoleDTO createdRole = roleService.createRole(userId, roleRequestDTO);

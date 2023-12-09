@@ -1,7 +1,5 @@
 package com.opus.service;
 
-import com.opus.dto.request.UserRequestInfo;
-import com.opus.entity.Client;
 import com.opus.entity.User;
 import com.opus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
