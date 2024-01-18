@@ -1,7 +1,6 @@
-import { Box, Divider, Grid, Paper, TextField } from "@mui/material";
+import { Box, Divider, Grid, TextField } from "@mui/material";
 import GenericTab from "../components/features/common/components/GenericTab";
-import blueGrey from "@mui/material/colors/blueGrey";
-import ProfileBanner from "../components/features/employees/components/ProfileBanner";
+import ProfileBanner from "../components/features/profile/components/ProfileBanner";
 
 const bio = 'Hunting things, saving people. The family business. Dean is known for handling a large number of weapons. His signature looks are black boots, a dark leather jacket and dark flannel shirts with dark blue jeans. He is also known for driving a signature black 1967 Chevrolet Impala, which he occasionally sleeps in, and he has a huge stash of weaponry in the trunk'
 

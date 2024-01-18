@@ -11,6 +11,7 @@ const useGenericState = <T>(initialState: InitialStateType<T>) => {
 
     return {
         state,
+        setState,
         onChangeHandler,
     };
 };

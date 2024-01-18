@@ -315,6 +315,48 @@ export interface ProfileDetailsDTO {
     'lastName'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'gender'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'nationality'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'maritalStatus'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileDetailsDTO
+     */
+    'profilePicUrl'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof ProfileDetailsDTO
      */
@@ -343,6 +385,85 @@ export interface ProfileDetailsDTO {
      * @memberof ProfileDetailsDTO
      */
     'roleTypeName'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ProfileUpdateDTO
+ */
+export interface ProfileUpdateDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProfileUpdateDTO
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'firstName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'middleName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'lastName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'phoneNumber'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'gender'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'nationality'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'maritalStatus'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ProfileUpdateDTO
+     */
+    'profilePicUrl'?: string;
 }
 /**
  * 
@@ -2507,6 +2628,41 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {ProfileUpdateDTO} profileUpdateDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUserProfile: async (profileUpdateDTO: ProfileUpdateDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'profileUpdateDTO' is not null or undefined
+            assertParamExists('updateUserProfile', 'profileUpdateDTO', profileUpdateDTO)
+            const localVarPath = `/users/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(profileUpdateDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2536,6 +2692,16 @@ export const UsersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerUser(createUserDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {ProfileUpdateDTO} profileUpdateDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateUserProfile(profileUpdateDTO: ProfileUpdateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileDetailsDTO>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserProfile(profileUpdateDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -2562,6 +2728,15 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         registerUser(createUserDTO: CreateUserDTO, options?: any): AxiosPromise<string> {
             return localVarFp.registerUser(createUserDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ProfileUpdateDTO} profileUpdateDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateUserProfile(profileUpdateDTO: ProfileUpdateDTO, options?: any): AxiosPromise<ProfileDetailsDTO> {
+            return localVarFp.updateUserProfile(profileUpdateDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2592,6 +2767,17 @@ export class UsersApi extends BaseAPI {
      */
     public registerUser(createUserDTO: CreateUserDTO, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).registerUser(createUserDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {ProfileUpdateDTO} profileUpdateDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public updateUserProfile(profileUpdateDTO: ProfileUpdateDTO, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).updateUserProfile(profileUpdateDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

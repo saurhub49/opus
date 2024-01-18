@@ -16,6 +16,8 @@ import RolesHome from "../../components/features/roles/components/RolesHome";
 import ClientsHome from "../../components/features/clients/components/ClientsHome";
 import RoleBasedAuthorizationConfig from "../../components/features/rbac/components/RoleBasedAuthorizationConfig";
 import WelcomeHome from "../../components/welcome/components/WelcomeHome";
+import { Icon } from "@mui/material";
+import UserProfile from "../../components/features/profile/components/UserProfile";
 
 const allRoleTypes: RoleTypes[] = [RoleTypes.SUPER_ADMIN, RoleTypes.ADMIN, RoleTypes.MANAGER, RoleTypes.EMPLOYEE];
 
@@ -91,5 +93,14 @@ export const routes: Route[] = [
         element: RoleBasedAuthorizationConfig,
         isSidebarElement: true,
         permissions: [RoleTypes.SUPER_ADMIN]
+    },
+    {
+        id: 9,
+        label: 'Profile',
+        path: '/profile',
+        icon: <Icon />,
+        element: UserProfile,
+        isSidebarElement: false,
+        permissions: allRoleTypes
     }
 ]
