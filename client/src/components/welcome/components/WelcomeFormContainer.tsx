@@ -20,7 +20,7 @@ const WelcomeFormContainer: React.FC<WelcomeFormContainerProps> = (props) => {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: 'url(' + process.env.PUBLIC_URL + '/opus-login.png)',
+                        backgroundImage: 'url(/opus-login.png)',
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],

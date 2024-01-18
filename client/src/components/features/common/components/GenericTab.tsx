@@ -18,7 +18,7 @@ const GenericTab: React.FC<GenericTabProps> = (props) => {
     const { items } = props;
     const [value, setValue] = React.useState(0);
 
-    const handleChange = React.useCallback((event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = React.useCallback((_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     }, []);
 

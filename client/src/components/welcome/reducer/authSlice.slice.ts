@@ -24,7 +24,7 @@ const authSlice = createSlice({
                 state.loading = false;
                 return state;
             })
-            .addCase(loginAction.rejected, (state, action) => {
+            .addCase(loginAction.rejected, (state) => {
                 state.loading = false;
                 return state;
             });

@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RoleApi, RoleDTO, RoleRequestDTO, RoleTypeDTO, RoleTypesApi } from "../../../../openapi";
 import { BASE_PATH } from "../../../../openapi/base";
 

@@ -12,7 +12,7 @@ import CircularLoading from "../../common/components/CircularLoading";
 const UserProfile: React.FC = () => {
     const { profile, loading } = useAppSelector(state => state.profile);
     const dispatch = useAppDispatch();
-    const { state, setState, onChangeHandler } = useGenericState(profile);
+    const { state, setState } = useGenericState(profile);
     const [updateProfile, updateProfileResult] = useUpdateProfileMutation();
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const UserProfile: React.FC = () => {
     }, [loading, profile, setState]);
 
     const onSubmitHandler = useCallback(() => {
-        if (!!state) {
+        if (state) {
             updateProfile(state);
         }
     }, [state, updateProfile]);
@@ -32,6 +32,8 @@ const UserProfile: React.FC = () => {
             dispatch(profileAction());
         }
     }, [dispatch, updateProfileResult.isLoading, updateProfileResult.isSuccess])
+
+    console.log(onSubmitHandler);
 
     return (
         !!state && !loading ?

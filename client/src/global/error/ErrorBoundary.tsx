@@ -20,6 +20,7 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
         const handleError = (event: ErrorEvent): void => {
             setHasError(true);
             // Log error here if needed
+            console.error(event.message)
         };
 
         window.addEventListener('error', handleError);
@@ -27,6 +28,7 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
         const handleUnhandledRejection = (event: PromiseRejectionEvent): void => {
             setHasError(true);
             // Log error here if needed
+            console.error(event)
         };
 
         window.addEventListener('unhandledrejection', handleUnhandledRejection);
