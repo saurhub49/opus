@@ -1,11 +1,11 @@
 #!/bin/bash
 
-sleep 10
+sleep 8
 
 # Generate the apis
 yarn openapi-generator-cli generate -i http://localhost:8080/v3/api-docs -g typescript-axios -o ./src/openapi
 
-sleep 10
+sleep 8
 
 file_path="src/openapi/base.ts"
 
