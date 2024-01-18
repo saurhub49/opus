@@ -3,6 +3,7 @@ package com.opus.controller;
 import com.opus.annotations.CheckAuthorization;
 import com.opus.dto.request.ConfirmUserDTO;
 import com.opus.dto.request.CreateUserDTO;
+import com.opus.dto.request.ProfileUpdateDTO;
 import com.opus.dto.response.ProfileDetailsDTO;
 import com.opus.enums.Entity;
 import com.opus.enums.Permission;
@@ -15,7 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
@@ -37,6 +40,18 @@ public class UserController extends BaseController {
     public ResponseEntity<ProfileDetailsDTO> getUserProfile() {
         Long userId = getUserId();
         ProfileDetailsDTO response = userService.getUserProfile(userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PatchMapping("/profile")
+    public ResponseEntity<ProfileDetailsDTO> updateUserProfile(@RequestBody ProfileUpdateDTO profileUpdateDTO) throws AccessDeniedException {
+        Long userId = getUserId();
+
+        if (!Objects.equals(userId, profileUpdateDTO.getId())) {
+            throw new AccessDeniedException("Access Denied");
+        }
+
+        ProfileDetailsDTO response = userService.updateUserProfile(profileUpdateDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class UserUpdateDTO {
+public class ProfileUpdateDTO {
+    private Long id;
     private String email;
-    private String password;
     private String firstName;
     private String middleName;
     private String lastName;
@@ -17,13 +17,14 @@ public class UserUpdateDTO {
     private String gender;
     private String nationality;
     private String maritalStatus;
+    private String profilePicUrl;
 
-    public UserUpdateDTO() {
+    public ProfileUpdateDTO() {
     }
 
-    public UserUpdateDTO(String email, String password, String firstName, String middleName, String lastName, String phoneNumber, String address, Date dateOfBirth, String gender, String nationality, String maritalStatus) {
+    public ProfileUpdateDTO(Long id, String email, String firstName, String middleName, String lastName, String phoneNumber, String address, Date dateOfBirth, String gender, String nationality, String maritalStatus, String profilePicUrl) {
+        this.id = id;
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -33,6 +34,15 @@ public class UserUpdateDTO {
         this.gender = gender;
         this.nationality = nationality;
         this.maritalStatus = maritalStatus;
+        this.profilePicUrl = profilePicUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -41,14 +51,6 @@ public class UserUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {
@@ -123,20 +125,11 @@ public class UserUpdateDTO {
         this.maritalStatus = maritalStatus;
     }
 
-    @Override
-    public String toString() {
-        return "UserUpdateDto{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender='" + gender + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", maritalStatus='" + maritalStatus + '\'' +
-                '}';
+    public String getProfilePicUrl() {
+        return profilePicUrl;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
     }
 }

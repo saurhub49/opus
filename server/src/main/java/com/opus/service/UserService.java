@@ -2,6 +2,7 @@ package com.opus.service;
 
 import com.opus.dto.request.ConfirmUserDTO;
 import com.opus.dto.request.CreateUserDTO;
+import com.opus.dto.request.ProfileUpdateDTO;
 import com.opus.dto.response.ProfileDetailsDTO;
 import com.opus.entity.Client;
 import com.opus.entity.EmploymentDetail;
@@ -100,6 +101,26 @@ public class UserService {
 
     public ProfileDetailsDTO getUserProfile(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        return ProfileDetailsDTO.fromEntity(user);
+    }
+
+    public ProfileDetailsDTO updateUserProfile(ProfileUpdateDTO profileUpdateDTO) {
+        User user = userRepository.findById(profileUpdateDTO.getId()).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + profileUpdateDTO.getId()));
+
+        user.setEmail(profileUpdateDTO.getEmail());
+        user.setFirstName(profileUpdateDTO.getFirstName());
+        user.setMiddleName(profileUpdateDTO.getMiddleName());
+        user.setLastName(profileUpdateDTO.getLastName());
+        user.setPhoneNumber(profileUpdateDTO.getPhoneNumber());
+        user.setAddress(profileUpdateDTO.getAddress());
+        user.setDateOfBirth(profileUpdateDTO.getDateOfBirth());
+        user.setGender(profileUpdateDTO.getGender());
+        user.setNationality(profileUpdateDTO.getNationality());
+        user.setMaritalStatus(profileUpdateDTO.getMaritalStatus());
+        user.setProfilePicUrl(profileUpdateDTO.getProfilePicUrl());
+
+        user = userRepository.save(user);
 
         return ProfileDetailsDTO.fromEntity(user);
     }
