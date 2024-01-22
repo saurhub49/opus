@@ -31,6 +31,8 @@ jobs:
     - name: Login Dockerhub
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build -t opus-app .
+      run: docker build -t skmahajan4998/opus-app .
+    - name: Push to Dockerhub
+      run: docker push skmahajan4998/opus-app:latest
     - name: Delete Dangling docker images
       run: docker image prune -f
