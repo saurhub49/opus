@@ -1,0 +1,35 @@
+name: Server CD
+
+on:
+  workflow_run:
+    workflows: ["Server Build"]
+    types:
+      - completed
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+    env:
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        SPRING_MAIL_USERNAME: ${{ secrets.SPRING_MAIL_USERNAME }}
+        SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+
+    steps:
+    - name: Delete Old Docker Compose
+      run: sudo docker-compose down || true
+    - name: Run Docker Container
+      run: |
+        echo "DB_URL=${DB_URL}" >> .env
+        echo "DB_USERNAME=${DB_USERNAME}" >> .env
+        echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
+        echo "DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}" >> .env
+        echo "DB_NAME=${DB_NAME}" >> .env
+        echo "SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}" >> .env
+        echo "SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}" >> .env
+        docker-compose up -d

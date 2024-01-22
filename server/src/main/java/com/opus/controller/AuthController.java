@@ -1,11 +1,16 @@
 package com.opus.controller;
 
+import com.opus.converters.ClientDtoConverter;
+import com.opus.dto.ClientDTO;
 import com.opus.dto.request.ConfirmUserDTO;
 import com.opus.dto.request.CreateUserDTO;
 import com.opus.dto.request.JwtRequest;
 import com.opus.dto.response.AuthResponse;
+import com.opus.entity.Client;
 import com.opus.entity.User;
+import com.opus.repository.ClientRepository;
 import com.opus.security.JwtHelper;
+import com.opus.service.ClientService;
 import com.opus.service.UserService;
 import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
@@ -18,6 +23,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -38,6 +45,14 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ClientService clientService;
+
+    @GetMapping("/")
+    public ClientDTO getOpus() {
+        return clientService.getClientById(1L);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody CreateUserDTO createUserDTO) throws MessagingException {
