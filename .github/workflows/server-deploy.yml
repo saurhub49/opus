@@ -1,0 +1,21 @@
+name: Server Deploy
+
+on:
+  workflow_run:
+    workflows: ["Server Build"]
+    types:
+      - completed
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - name: Pull Docker Image
+      run: sudo docker pull skmahajan4998/opus-app:latest
+    - name: Delete Old Docker Container
+      run: sudo docker rm -f opus-app-container || true
+    - name: Run Docker Container
+      run: sudo docker run -d -p 8080:8080 --name opus-app-container skmahajan4998/opus-app
