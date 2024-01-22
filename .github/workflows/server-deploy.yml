@@ -8,14 +8,20 @@ on:
 
 jobs:
 
-  build:
-
+  pull-image:
     runs-on: self-hosted
-
     steps:
     - name: Pull Docker Image
       run: sudo docker pull skmahajan4998/opus-app:latest
-    - name: Delete Old Docker Container
+  delete-existing-container:
+    runs-on: self-hosted
+    needs: pull-image
+    steps:
+    - name: Delete Existing Docker Container
       run: sudo docker rm -f opus-app-container || true
+  run-latest-container:
+    runs-on: self-hosted
+    needs: delete-existing-container
+    steps:
     - name: Run Docker Container
       run: sudo docker run -d -p 8080:8080 --name opus-app-container skmahajan4998/opus-app
