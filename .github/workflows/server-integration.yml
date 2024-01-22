@@ -25,11 +25,5 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
     - name: Build Project
-      run: mvn clean install \
-        -D spring.datasource.url=${DB_URL} \
-        -D spring.datasource.username=${DB_USERNAME} \
-        -D spring.datasource.password=${DB_PASSWORD} \
-        -D spring.mail.username=${SPRING_MAIL_USERNAME} \
-        -D spring.mail.password=${SPRING_MAIL_PASSWORD} \
-        -B
+      run: mvn clean install -D spring.datasource.url=${DB_URL} -D spring.datasource.username=${DB_USERNAME} -D spring.datasource.password=${DB_PASSWORD} -D spring.mail.username=${SPRING_MAIL_USERNAME} -D spring.mail.password=${SPRING_MAIL_PASSWORD} -B
 
